@@ -12,7 +12,7 @@
         bottom:30px!important;
         height: auto;
         margin-bottom: 0px;
-        margin-top: 0px;
+        margin-top: 2px;
     }
 </style>
 
