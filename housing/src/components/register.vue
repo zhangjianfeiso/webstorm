@@ -250,7 +250,7 @@
             </div>
             <footer class="footer">
                 <div class="yellow" id="register" tapmode="yellow-btn-active" @click="register()">注册并登录</div>
-                <div class="yellow" id="green" tapmode="yellow-btn-active" @click="login()">我有登录</div>
+                <div class="yellow" id="green" tapmode="yellow-btn-active" @click="login()">我有账号了</div>
             </footer>
 
         </div>

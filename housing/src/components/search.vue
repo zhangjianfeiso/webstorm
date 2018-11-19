@@ -6,7 +6,7 @@
       padding: 0px 10px 0px 10px;
     }
     .city,.searchWrap{
-      background: #F7F7D1;
+      background: white;
     }
 </style>
 
