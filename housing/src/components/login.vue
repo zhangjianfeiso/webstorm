@@ -139,7 +139,7 @@
             <p class="find-pwd"><a>找回密码</a></p>
 
             <div class="btn green" id="login" @click="login">登录</div>
-            <a class="btn yellow margin-top-25">注册新用户</a>
+            <a class="btn yellow margin-top-25" @click="register">注册新用户</a>
             <div class="wechat-login" @click="wechatLogin">
                 <img src="../../static/images/wechat-logo.png"><br/>
                 微信登陆
@@ -157,6 +157,9 @@ export default {
     methods: {
         login:function() {
             this.$router.push({path: '/'});
+        },
+        register:function () {
+            this.$router.push({path: '/register'});
         },
         wechatLogin:function () {//微信登陆
             console.info('微信登陆');
