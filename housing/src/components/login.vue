@@ -1,9 +1,11 @@
 <style scoped>
-    body, html {
+    body, html,.login-content {
+        position: absolute;
+        width:100%;
         height: 100%;
     }
 
-    body {
+    body,.login-content {
         background-image: url(../../static/images/bg.jpg);
         background-repeat: no-repeat;
         background-size: 100%;
@@ -108,6 +110,7 @@
     }
     .login-content .wechat-login{
         margin-top:20px;
+        color:white;
     }
 </style>
 
