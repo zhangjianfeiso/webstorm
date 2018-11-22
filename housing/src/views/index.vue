@@ -2,14 +2,16 @@
     body {
         background-color: #ff0000;
     }
-  .search-contains{
-      height:80px;
-      z-index: 10100!important;
-  }
-    .contains{
-        position: absolute!important;
-        top:70px!important;
-        bottom:30px!important;
+
+    .search-contains {
+        height: 80px;
+        z-index: 10100 !important;
+    }
+
+    .contains {
+        position: absolute !important;
+        top: 70px !important;
+        bottom: 30px !important;
         height: auto;
         margin-bottom: 0px;
         margin-top: 2px;
@@ -40,19 +42,20 @@ import vsearch from '@/components/search.vue'
 import vheader from '@/components/header.vue'
 import vloading from '@/components/loading.vue'
 import vhousing from '@/views/housing/housing.vue'
+import wx from 'weixin-js-sdk';
 
 export default {
     data() {
         return {
-            show:false,
+            show: false,
             headeritle: '楼盘信息'
         }
     },
-    methods:{
-      search:function (qsearch) {
-          console.info('点击了搜索按钮。。。。',qsearch);
-      }
+    methods: {
+        search: function (qsearch) {
+            console.info('点击了搜索按钮。。。。', qsearch);
+        }
     },
-    components: {vmenu,vsearch,vheader,vloading,vhousing}
+    components: {vmenu, vsearch, vheader, vloading, vhousing}
 }
 </script>

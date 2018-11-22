@@ -350,11 +350,11 @@
             </div>-->
         </div>
         <ul class="category">
-            <li class="group" onclick="openGroup('跟团游')" tapmode="">
+            <li class="group" @click="initWx('跟团游')" tapmode="">
                 <span>跟团游</span>
             </li>
-            <li class="self" onclick="openGroup('自助游')" tapmode="">
-                <span>自助游</span>
+            <li class="self" @click="qrcode('自助游')" tapmode="">
+                <span>扫一扫</span>
             </li>
             <li class="ship" onclick="openGroup('游轮')" tapmode="">
                 <span>游轮</span>
@@ -545,9 +545,60 @@
 
 
 <script>
+import wx from 'weixin-js-sdk'
+
 export default {
     data() {
         return {msg: '这个是Home模板页'}
+    },
+    methods:{
+        initWx: function () {
+            var url = 'http://192.168.1.104:8084/wechat/config';
+            var $vm = this;
+            this.$http.post(url, {'url': location.href},{emulateJSON:true}).then(function (response) {
+                if (response.body.code == 200) {
+                    $vm.wxConfig(response.body.data);
+                } else {
+                    alert('错误_1_' + response.body.message);
+                }
+            }, function (error) {
+                alert('错误_2_' + JSON.stringify(error));
+            });
+        },
+        wxConfig: function (wxObj) {
+            alert('成功___' + JSON.stringify(wxObj));
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: wxObj.appId, // 必填，公众号的唯一标识
+                timestamp: wxObj.timestamp, // 必填，生成签名的时间戳
+                nonceStr: wxObj.nonceStr, // 必填，生成签名的随机串
+                signature: wxObj.signature,// 必填，签名
+                jsApiList: [ 'checkJsApi', 'startRecord', 'stopRecord','translateVoice','scanQRCode', 'openCard' ] // 必填，需要使用的JS接口列表
+            });
+        },
+        qrcode:function () {
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    alert("扫描结果："+result);
+                }
+            });
+
+           /* wx.ready(function() {
+                wx.checkJsApi({
+                    jsApiList: ['scanQRCode'],
+                    success: function (res) {
+                        console.info(res)
+                    }
+                });
+
+
+
+            });//end_ready*/
+
+        }
     },
     components: {}
 }
