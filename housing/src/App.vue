@@ -6,16 +6,7 @@
 
 <script>
 export default {
-    name: 'App',
-    data() {
-
-    },
-    mounted: function () {
-
-    },
-    methods: {
-
-    }
+    name: 'App'
 }
 </script>
 
