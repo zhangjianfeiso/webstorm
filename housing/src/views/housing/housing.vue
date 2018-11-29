@@ -356,8 +356,8 @@
             <li class="self" @click="qrcode('自助游')" tapmode="">
                 <span>扫一扫</span>
             </li>
-            <li class="ship" onclick="openGroup('游轮')" tapmode="">
-                <span>游轮</span>
+            <li class="ship" @click="auth('游轮')" tapmode="">
+                <span>登录</span>
             </li>
             <li class="ticket" onclick="openGroup('景点门票')" tapmode="">
                 <span>景点门票</span>
@@ -553,7 +553,7 @@ export default {
     },
     methods:{
         initWx: function () {
-            var url = 'http://192.168.1.104:8084/wechat/config';
+            var url = 'http://localhost:8084/wechat/config';
             var $vm = this;
             this.$http.post(url, {'url': location.href},{emulateJSON:true}).then(function (response) {
                 if (response.body.code == 200) {
@@ -598,6 +598,15 @@ export default {
 
             });//end_ready*/
 
+        },
+        auth:function () {
+            //wx570bc396a51b8ff8
+            var appid = 'wxbdc5610cc59c1631';
+            var redirect_uri = 'http://15n3e97143.imwork.net';
+            redirect_uri = 'https%3A%2F%2Fpassport.yhd.com%2Fwechat%2Fcallback.do';
+            var url = `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect`
+            console.info(url);
+            window.location.href = url;
         }
     },
     components: {}
