@@ -311,7 +311,7 @@
 
 
 <template>
-    <div class="housing-body">
+    <div class="housing-body" id="container">
         <div id='slide' class='swipe'>
             <div class='swipe-wrap' id="banner-content">
                 <div onclick="openSlider('三峡好风景')" tapmode="">
@@ -381,7 +381,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t1.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=10" class="lazy">
+                    <!--<img src="../../../static/images/t1.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月21日 | 北京出发</div>
                 </dd>
                 <dd class="detail">
@@ -396,7 +397,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t2.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=9" class="lazy">
+                   <!-- <img src="../../../static/images/t2.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月22日 | 北京出发</div>
                 </dd>
                 <dd class="detail">
@@ -411,7 +413,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t3.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=8" class="lazy">
+                   <!-- <img src="../../../static/images/t3.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月23日 | 北京出发</div>
                 </dd>
@@ -427,7 +430,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t4.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=7" class="lazy">
+                    <!--<img src="../../../static/images/t4.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月24日 | 北京出发</div>
                 </dd>
@@ -443,7 +447,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t5.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=6" class="lazy">
+                   <!-- <img src="../../../static/images/t5.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月25日 | 北京出发</div>
                 </dd>
@@ -459,7 +464,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t6.jpg">
+                    <!--<img src="../../../static/images/t6.jpg" class="lazy" data-original="img/example.jpg">-->
+                    <img data-original="http://localhost:8084/img/download?t=5" class="lazy">
 
                     <div class="lable">10月26日 | 北京出发</div>
                 </dd>
@@ -478,7 +484,8 @@
             <dt><span>爆款专区</span><span>更多 ></span></dt>
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t7.jpg">
+                    <!--<img src="../../../static/images/t7.jpg" class="lazy" data-original="img/example.jpg">-->
+                    <img data-original="http://localhost:8084/img/download?t=4" class="lazy">
 
                     <div class="lable">10月27日 | 北京出发</div>
                 </dd>
@@ -497,7 +504,8 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t8.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=3" class="lazy">
+                    <!--<img src="../../../static/images/t8.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月28日 | 北京出发</div>
                 </dd>
                 <dd class="detail">
@@ -514,7 +522,8 @@
             </div>
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t9.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=2" class="lazy">
+                    <!--<img src="../../../static/images/t9.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月28日 | 北京出发</div>
                 </dd>
@@ -535,7 +544,8 @@
             <dt><span>每日精选</span><span></span></dt>
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img src="../../../static/images/t10.jpg">
+                    <img data-original="http://localhost:8084/img/download?t=1" class="lazy">
+                    <!--<img src="../../../static/images/t10.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月29日 | 北京出发</div>
                 </dd>
             </div>
