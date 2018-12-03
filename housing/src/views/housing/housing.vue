@@ -353,14 +353,14 @@
             <li class="group" @click="initWx('跟团游')" tapmode="">
                 <span>跟团游</span>
             </li>
-            <li class="self" @click="qrcode('自助游')" tapmode="">
+            <li class="self" @click="qrcode('扫一扫')" tapmode="">
                 <span>扫一扫</span>
             </li>
-            <li class="ship" @click="auth('游轮')" tapmode="">
+            <li class="ship" @click="auth('登陆')" tapmode="">
                 <span>登录</span>
             </li>
-            <li class="ticket" onclick="openGroup('景点门票')" tapmode="">
-                <span>景点门票</span>
+            <li class="ticket" @click="share('朋友圈')" tapmode="">
+                <span>分享朋友圈</span>
             </li>
             <li class="drive" onclick="openGroup('自驾游')" tapmode="">
                 <span>自驾游</span>
@@ -544,7 +544,7 @@
             <dt><span>每日精选</span><span></span></dt>
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=1" class="lazy">
+                    <img data-original="http://47.107.129.140/5.jpg" class="lazy">
                     <!--<img src="../../../static/images/t10.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月29日 | 北京出发</div>
                 </dd>
@@ -563,7 +563,7 @@ export default {
     },
     methods:{
         initWx: function () {
-            var url = 'http://localhost:8084/wechat/config';
+            var url = 'http://15n3e97143.imwork.net/wechat/config';
             var $vm = this;
             this.$http.post(url, {'url': location.href},{emulateJSON:true}).then(function (response) {
                 if (response.body.code == 200) {
@@ -617,6 +617,16 @@ export default {
             var url = `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect`
             console.info(url);
             window.location.href = url;
+        },
+        share:function () {//share
+            wx.updateTimelineShareData({
+                title: '测试分享朋友圈', // 分享标题
+                link: 'http://zhangjf.iask.in', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://47.107.129.140/5.jpg', // 分享图标
+                success: function () {
+                    // 设置成功
+                }
+            });
         }
     },
     components: {}

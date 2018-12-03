@@ -42,7 +42,7 @@ import vsearch from '@/components/search.vue'
 import vheader from '@/components/header.vue'
 import vloading from '@/components/loading.vue'
 import vhousing from '@/views/housing/housing.vue'
-import wx from 'weixin-js-sdk';
+
 
 export default {
     data() {
