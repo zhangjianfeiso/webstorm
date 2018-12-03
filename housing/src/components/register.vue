@@ -261,11 +261,11 @@
 <script>
 export default {
     data() {
-        return {msg: '这个是Home模板页'}
+        return {msg: '这个是模板页'}
     },
     methods:{
         register:function () {
-
+            alert('openid____'+sessionStorage.getItem('share_openid'));
         },
         login:function () {
             this.$router.push({path:'/login'});

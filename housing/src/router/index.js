@@ -7,6 +7,7 @@ import vindex from '@/views/index.vue'
 import vcustom from '@/views/custom.vue'
 import vdynamic from '@/views/dynamic.vue'
 import vuser from '@/views/user.vue'
+import vdetail from '@/views/housing/detail.vue'
 
 
 Vue.use(Router)
@@ -42,6 +43,11 @@ export default new Router({
             path: '/user',
             name: 'user',
             component: vuser
+        },
+        {
+            path: '/housing/detail/:id',
+            name: 'housing_detail',
+            component: vdetail
         }
     ]
 })

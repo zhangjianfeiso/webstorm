@@ -16,11 +16,13 @@ new Vue({
     components: {App},
     template: '<App/>',
     mounted:function () {
+        alert('openid___'+this.$route.query.openid);
+        sessionStorage.setItem('share_openid',this.$route.query.openid)
         this.initWx();
     },
     methods:{
         initWx: function () {
-            var url = 'http://localhost:8084/wechat/config';
+            var url = 'http://15n3e97143.imwork.net/wechat/config';
             var $vm = this;
             this.$http.post(url, {'url': location.href},{emulateJSON:true}).then(function (response) {
                 if (response.body.code == 200) {
@@ -40,8 +42,28 @@ new Vue({
                 timestamp: wxObj.timestamp, // 必填，生成签名的时间戳
                 nonceStr: wxObj.nonceStr, // 必填，生成签名的随机串
                 signature: wxObj.signature,// 必填，签名
-                jsApiList: [ 'checkJsApi', 'startRecord', 'stopRecord','translateVoice','scanQRCode', 'openCard' ] // 必填，需要使用的JS接口列表
+                jsApiList: [ 'checkJsApi',
+                    'updateTimelineShareData',//分享朋友圈
+                    'updateAppMessageShareData',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone',
+                    'startRecord',
+                    'stopRecord',
+                    'translateVoice',
+                    'scanQRCode',
+                    'openCard' ] // 必填，需要使用的JS接口列表
             });
+            wx.ready(function() {
+                alert('success');
+            });
+            wx.error(function(res) {
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                alert('error');
+            });
+
         },
     }
 })

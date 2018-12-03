@@ -360,7 +360,7 @@
                 <span>登录</span>
             </li>
             <li class="ticket" @click="share('朋友圈')" tapmode="">
-                <span>分享朋友圈</span>
+                <span>朋友圈</span>
             </li>
             <li class="drive" onclick="openGroup('自驾游')" tapmode="">
                 <span>自驾游</span>
@@ -379,9 +379,9 @@
         <dl>
             <dt><span>尾货专区</span><span>更多 ></span></dt>
 
-            <div class="dl-group">
+            <div class="dl-group" @click="gotoDetail(1)">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=10" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=10" class="lazy">
                     <!--<img src="../../../static/images/t1.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月21日 | 北京出发</div>
                 </dd>
@@ -395,9 +395,9 @@
                 </dd>
             </div>
 
-            <div class="dl-group">
+            <div class="dl-group" @click="gotoDetail(2)">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=9" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=9" class="lazy">
                    <!-- <img src="../../../static/images/t2.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月22日 | 北京出发</div>
                 </dd>
@@ -411,9 +411,9 @@
                 </dd>
             </div>
 
-            <div class="dl-group">
+            <div class="dl-group" @click="gotoDetail(3)">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=8" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=8" class="lazy">
                    <!-- <img src="../../../static/images/t3.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月23日 | 北京出发</div>
@@ -430,7 +430,7 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=7" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=7" class="lazy">
                     <!--<img src="../../../static/images/t4.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月24日 | 北京出发</div>
@@ -447,7 +447,7 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=6" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=6" class="lazy">
                    <!-- <img src="../../../static/images/t5.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月25日 | 北京出发</div>
@@ -465,7 +465,7 @@
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
                     <!--<img src="../../../static/images/t6.jpg" class="lazy" data-original="img/example.jpg">-->
-                    <img data-original="http://localhost:8084/img/download?t=5" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=5" class="lazy">
 
                     <div class="lable">10月26日 | 北京出发</div>
                 </dd>
@@ -485,7 +485,7 @@
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
                     <!--<img src="../../../static/images/t7.jpg" class="lazy" data-original="img/example.jpg">-->
-                    <img data-original="http://localhost:8084/img/download?t=4" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=4" class="lazy">
 
                     <div class="lable">10月27日 | 北京出发</div>
                 </dd>
@@ -504,7 +504,7 @@
 
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=3" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=3" class="lazy">
                     <!--<img src="../../../static/images/t8.jpg" class="lazy" data-original="img/example.jpg">-->
                     <div class="lable">10月28日 | 北京出发</div>
                 </dd>
@@ -522,7 +522,7 @@
             </div>
             <div class="dl-group">
                 <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://localhost:8084/img/download?t=2" class="lazy">
+                    <img data-original="http://15n3e97143.imwork.net/img/download?t=2" class="lazy">
                     <!--<img src="../../../static/images/t9.jpg" class="lazy" data-original="img/example.jpg">-->
 
                     <div class="lable">10月28日 | 北京出发</div>
@@ -562,6 +562,9 @@ export default {
         return {msg: '这个是Home模板页'}
     },
     methods:{
+        gotoDetail:function (id) {
+            this.$router.push('/housing/detail/' + id);
+        },
         initWx: function () {
             var url = 'http://15n3e97143.imwork.net/wechat/config';
             var $vm = this;
@@ -619,14 +622,22 @@ export default {
             window.location.href = url;
         },
         share:function () {//share
-            wx.updateTimelineShareData({
-                title: '测试分享朋友圈', // 分享标题
-                link: 'http://zhangjf.iask.in', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl: 'http://47.107.129.140/5.jpg', // 分享图标
-                success: function () {
-                    // 设置成功
-                }
-            });
+            var imgUrl = 'http://47.107.129.140/5.jpg',//缩略图
+                link = 'http://zhangjf.iask.in?openid=xxxxxxxxxxxxxxxxxxxxxxxx';//分享页面链接
+            var shareData = {
+                title: '测试分享朋友圈',
+                desc: '好的东西我都想与你一起分享~',//这里请特别注意是要去除html
+                link: link,
+                imgUrl: imgUrl
+            };
+            if(wx.onMenuShareAppMessage){ //微信文档中提到这两个接口即将弃用，故判断
+                wx.onMenuShareAppMessage(shareData);//1.0 分享到朋友
+                wx.onMenuShareTimeline(shareData);//1.0分享到朋友圈
+            }else{
+                wx.updateAppMessageShareData(shareData);//1.4 分享到朋友
+                wx.updateTimelineShareData(shareData);//1.4分享到朋友圈
+            }
+
         }
     },
     components: {}
