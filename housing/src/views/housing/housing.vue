@@ -565,30 +565,6 @@ export default {
         gotoDetail:function (id) {
             this.$router.push('/housing/detail/' + id);
         },
-        initWx: function () {
-            var url = 'http://15n3e97143.imwork.net/wechat/config';
-            var $vm = this;
-            this.$http.post(url, {'url': location.href},{emulateJSON:true}).then(function (response) {
-                if (response.body.code == 200) {
-                    $vm.wxConfig(response.body.data);
-                } else {
-                    alert('错误_1_' + response.body.message);
-                }
-            }, function (error) {
-                alert('错误_2_' + JSON.stringify(error));
-            });
-        },
-        wxConfig: function (wxObj) {
-            alert('成功___' + JSON.stringify(wxObj));
-            wx.config({
-                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                appId: wxObj.appId, // 必填，公众号的唯一标识
-                timestamp: wxObj.timestamp, // 必填，生成签名的时间戳
-                nonceStr: wxObj.nonceStr, // 必填，生成签名的随机串
-                signature: wxObj.signature,// 必填，签名
-                jsApiList: [ 'checkJsApi', 'startRecord', 'stopRecord','translateVoice','scanQRCode', 'openCard' ] // 必填，需要使用的JS接口列表
-            });
-        },
         qrcode:function () {
             wx.scanQRCode({
                 needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，

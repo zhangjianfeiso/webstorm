@@ -1,30 +1,12 @@
 <style scoped>
-    body {
-        background-color: #ff0000;
-    }
 </style>
 
-
 <template>
-    <div>
 
-    </div>
 </template>
 
-
 <script>
-
-var wechatAccessToke = 'www.baidu.com';
-var serverPath = 'http://192.168.1.103:80';
-
-export default {
-    wechatAccessToke,
-    serverPath,
-    data() {
-        return {
-
-        }
-    },
-    components: {}
-}
+    export default {
+        apiUrl:'http://15n3e97143.imwork.net'  //微信api接口
+    }
 </script>
