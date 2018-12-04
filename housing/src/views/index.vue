@@ -53,8 +53,9 @@ export default {
     },
     mounted:function () {
         this.setShareOpenid();
+        alert('分享者__openid___'+this.getShareOpenid());
         this.getOpenId().then(openid => {
-            alert('openid___'+openid);
+            alert('登陆人__openid___'+openid);
         });
         this.share({title:'自定义朋友圈',
             desc:'这是描述',

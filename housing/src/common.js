@@ -134,6 +134,7 @@ export default {
                     link: opts.link, //分享页面链接
                     imgUrl: opts.img //缩略图
                 };
+                console.info('分享___',shareData);
                 if(wx.onMenuShareAppMessage){ //微信文档中提到这两个接口即将弃用，故判断
                     wx.onMenuShareAppMessage(shareData);//1.0 分享到朋友
                     wx.onMenuShareTimeline(shareData);//1.0分享到朋友圈
