@@ -52,6 +52,16 @@ export default {
         }
     },
     mounted:function () {
+        this.setShareOpenid();
+        this.getOpenId().then(openid => {
+            alert('openid___'+openid);
+        });
+        this.share({title:'自定义朋友圈',
+            desc:'这是描述',
+            link:'http://zhangjf.iask.in?shareOpenid=hkkKL-KLMKkkmdksa121jkl',
+            img: this.$global.mainImg});
+
+
         $("img.lazy").lazyload({
             placeholder : "../../static/images/loading.gif", //用图片提前占位
             // placeholder,值为某一图片路径.此图片用来占据将要加载的图片的位置,待图片加载时,占位图则会隐藏

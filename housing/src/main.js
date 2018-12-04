@@ -23,8 +23,7 @@ new Vue({
     components: {App},
     template: '<App/>',
     mounted:function () {
-        this.initWx({url:location.href});//微信jssdj配置
-        sessionStorage.setItem('share_openid',this.$route.query.openid?this.$route.query.openid:'');
+        this.setShareOpenid();
     },
     methods:{
 
