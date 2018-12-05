@@ -85,7 +85,7 @@ td, th {
 }
 
 .loading_more:before {
-    background-image: url(../image/loading_more.gif) 30% center;
+    background-image: url(../images/loading_more.gif) 30% center;
     background-repeat: no-repeat;
     background-size: contain;
     text-align: center

@@ -8,6 +8,7 @@ import vcustom from '@/views/custom.vue'
 import vdynamic from '@/views/dynamic.vue'
 import vuser from '@/views/user.vue'
 import vdetail from '@/views/housing/detail.vue'
+import vqrcode from '@/views/qrcode/qrcode.vue'
 
 
 Vue.use(Router)
@@ -48,6 +49,11 @@ export default new Router({
             path: '/housing/detail/:id',
             name: 'housing_detail',
             component: vdetail
+        },
+        {
+            path: '/qrcode/:openid',
+            name: 'qrcode',
+            component: vqrcode
         }
     ]
 })

@@ -8,6 +8,7 @@ import wx from 'weixin-js-sdk';
 import global from '@/components/global.vue';
 import common from './common.js';
 
+
 Vue.use(vue_resource);
 Vue.use(wx);
 Vue.use(common);
