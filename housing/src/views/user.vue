@@ -143,7 +143,9 @@
     }
 
     .qrcode {
-        background-image: url("../../static/images/qrcode.png");
+        background-image: url("../../static/images/icon_qrcode.png");
+        background-size: 16px!important;
+        margin-left: 1px;
     }
 </style>
 
@@ -153,7 +155,9 @@
         <div class="contains">
             <div class="unlogin">
                 <img src="../../static/images/t1.jpg">
-                <button class="login" tapmode="" @click="login">立即登录</button>
+                <button class="login" tapmode="">
+                    <router-link to="/login">立即登录</router-link>
+                </button>
             </div>
             <div class="user-img">
                 <img src="../../static/images/user_avatar_unlogin@2x.png">
@@ -200,9 +204,6 @@
             return {msg: '这个是Home模板页'}
         },
         methods: {
-            login:function() {
-                this.$router.push({path: '/login'});
-            },
             qrcode:function () {
                 this.$router.push({path: '/qrcode/' + 'openid'})
             }
