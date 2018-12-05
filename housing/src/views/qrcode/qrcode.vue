@@ -250,7 +250,7 @@
                     R= parseInt($(obj).outerHeight());
                 }
                 $(obj).find(".bd").css({"width":(R*2)+"px","height":(R*2)+"px"});
-                $(obj).find(".bd").css({"left":(e.pageX-$(obj).position().left-R)+"px","top":(e.pageY-$(obj).position().top-R)+"px" });
+                $(obj).find(".bd").css({"left":(event.pageX-$(obj).position().left-R)+"px","top":(event.pageY-$(obj).position().top-R)+"px" });
                 // $(this).find(".bd").css({"left":(e.pageX-$(this).position().left-R/2 )+"px","top":(e.pageY-$(this).position().top-R/2 )+"px" });
                 $(obj).find(".bd").addClass("dh");
             },
