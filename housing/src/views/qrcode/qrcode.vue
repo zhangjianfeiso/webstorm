@@ -206,9 +206,9 @@
         z-index: 999;
         width:100%;
         height:100%;
-        filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
-        -moz-opacity:0.5; /*Firefox私有，透明度50%*/
-        opacity:0.5;/*其他，透明度50%*/
+        filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+        -moz-opacity:0.7; /*Firefox私有，透明度50%*/
+        opacity:0.7;/*其他，透明度50%*/
     }
     .hidden_pro_au {
         display:none;
