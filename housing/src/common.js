@@ -14,15 +14,15 @@ export default {
         /**
          * 保存分享者的openid
          */
-        Vue.prototype.setShareOpenid = function () {
-            sessionStorage.setItem('share_openid',this.$route.query.shareOpenid?this.$route.query.shareOpenid:'');
+        Vue.prototype.setShareUser = function () {
+            sessionStorage.setItem('share_openid',this.$route.query.shareUser?this.$route.query.shareUser:'');
         };
 
         /**
          * 获取分享者的openid
          */
-        Vue.prototype.getShareOpenid = function () {
-            return sessionStorage.getItem('share_openid');
+        Vue.prototype.getShareUser = function () {
+            return sessionStorage.getItem('share_openid')?JSON.parse(sessionStorage.getItem('share_openid')):'';
         };
 
         /**
@@ -32,27 +32,51 @@ export default {
          */
         Vue.prototype.redirectUri = function (redirectUri) {
             var appid = this.$global.appid;
-            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
+            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
         };
 
+        Vue.prototype.auth = function () {
+            let iswx = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger";
+            if (iswx) {
+                var code = sessionStorage.getItem('weixin-redirect-code');
+                var params = this.$route.query;
+                if (!params.code && !code) {
+                    window.location.replace(this.redirectUri(location.href));
+                } else if (!code) {
+                    sessionStorage.setItem('weixin-redirect-code', params.code)
+                    history.back()
+                }
+            }
+           // window.location.replace(this.redirectUri(location.href));
+        }
 
         /**
          * code 换取 openid
          * @returns {*} openid nickname
          */
         Vue.prototype.getOpenId = function () {
+            var user = sessionStorage.getItem('user');
+            if(user){
+                return Promise.resolve(JSON.parse(user));
+            }
             var code = this.$route.query.code;
             if(code){
                 var url = this.$global.apiUrl + '/api/openid';
-                return this.$http.post(url, {'code': code},{emulateJSON:true}).then(function (response) {
+                return this.$http.post(url,{code:code},{emulateJSON:true}).then(function (response) {
+                    let iswx = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger";
+                    if (iswx) {
+                        sessionStorage.removeItem('weixin-redirect-code')
+                    }
                     if (response.body.code == 200) {
+                        //alert('user_2_'+JSON.stringify(response.body.data));
+                        sessionStorage.setItem('user',JSON.stringify(response.body.data));
                         return Promise.resolve(response.body.data);
                     } else {
-                        console.info('错误_1_' + response.body.message);
+                        //alert('错误_1_' + response.body.message);
                         return Promise.resolve(response.body.message);
                     }
                 }, function (error) {
-                    console.info('错误_2_' + JSON.stringify(error));
+                    //alert('错误_2_' + JSON.stringify(error));
                     return Promise.resolve(error);
                 });
             }
@@ -67,8 +91,7 @@ export default {
         Vue.prototype.initWx = function (opts){
             console.info('initWx__',this.$global.apiUrl);
             var url = this.$global.apiUrl + '/wechat/config';
-            var $this = this;
-            return $this.$http.post(url, {'url': opts.url},{emulateJSON:true}).then(function (response) {
+            return this.$http.post(url, {'url': opts.url},{emulateJSON:true}).then(function (response) {
                 if (response.body.code == 200) {
                     return Promise.resolve(response.body.data);
                 } else {

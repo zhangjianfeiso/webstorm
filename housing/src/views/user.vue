@@ -179,7 +179,7 @@
 
                 </ul>
                 <ul class="user-setting">
-                    <li tapmode="liActive" @click="qrcode"><a class="qrcode">我的二维码</a></li>
+                    <li tapmode="liActive" @click="qrcode" v-if="user.openid != null && user.openid != ''"><a class="qrcode">我的二维码</a></li>
                     <li tapmode="liActive" onclick="login()"><a class="subscribe">特价订阅</a></li>
                     <li tapmode="liActive" onclick="login()"><a class="favorite">我的收藏</a></li>
                     <li tapmode="liActive" onclick="login()"><a class="comment">我的点评</a></li>
@@ -201,11 +201,20 @@
 
     export default {
         data() {
-            return {msg: '这个是Home模板页'}
+            return {
+                user:{}
+            }
+        },
+        mounted:function () {
+            var $this = this;
+            $this.setShareUser();
+            $this.getOpenId().then(user => {
+                $this.user = user;
+            })
         },
         methods: {
             qrcode:function () {
-                this.$router.push({path: '/qrcode/' + 'openid'})
+                this.$router.push({path: '/qrcode/' + this.user.openid});
             }
         },
         components: {vmenu}

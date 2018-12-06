@@ -14,7 +14,8 @@ Vue.use(vue_resource);
 Vue.use(wx);
 Vue.use(common);
 
-
+Vue.http.options.emulateJSON = true
+Vue.http.options.emulateHTTP = true
 Vue.config.productionTip = false;
 Vue.prototype.$global = global;
 
@@ -26,7 +27,8 @@ new Vue({
     components: {App},
     template: '<App/>',
     mounted:function () {
-        this.setShareOpenid();
+        //获取分享者openid
+        this.setShareUser();
     },
     methods:{
 

@@ -52,16 +52,17 @@ export default {
         }
     },
     mounted:function () {
-        this.setShareOpenid();
-        console.info('分享者__openid___'+this.getShareOpenid());
-        this.getOpenId().then(openid => {
-            console.info('登陆人__openid___'+openid);
+        this.setShareUser();
+        this.getOpenId().then(user => {
+            if(!user || !user.openid){
+                this.auth();
+                return;
+            }
+            this.share({title:'自定义朋友圈',
+                desc:'这是描述',
+                link: this.$global.baseUrl + '?shareUser=' + JSON.stringify(user),
+                img: this.$global.mainImg});
         });
-        this.share({title:'自定义朋友圈',
-            desc:'这是描述',
-            link:'http://zhangjf.iask.in?shareOpenid=hkkKL-KLMKkkmdksa121jkl',
-            img: this.$global.mainImg});
-
 
         $("img.lazy").lazyload({
             placeholder : "../../static/images/loading.gif", //用图片提前占位

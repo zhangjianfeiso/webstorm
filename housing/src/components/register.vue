@@ -250,7 +250,9 @@
             </div>
             <footer class="footer">
                 <div class="yellow" id="register" tapmode="yellow-btn-active" @click="register()">注册并登录</div>
-                <div class="yellow" id="green" tapmode="yellow-btn-active" @click="login()">我有账号了</div>
+                <div class="yellow" id="green" tapmode="yellow-btn-active" style="line-height: 0;">
+                    <router-link to="/login">我有账号了</router-link>
+                </div>
             </footer>
 
         </div>
@@ -263,9 +265,13 @@ export default {
     data() {
         return {msg: '这个是模板页'}
     },
+    mounted:function () {
+        this.setShareUser();
+    },
     methods:{
         register:function () {
-            alert('openid____'+sessionStorage.getItem('share_openid'));
+            this.getShareUser(); //获取分享者
+            alert('register__user__'+this.getShareUser());
         },
         login:function () {
             this.$router.push({path:'/login'});

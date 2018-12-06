@@ -236,15 +236,15 @@
         <div style="width: 100%;height: 20px;background-color: #3ABA63;padding-left: 20px;margin-left: -12px;"></div>
         <div class="content2">
             <div class="qrcode-content2">
-                <div class="button-group2">
+                <div class="button-group2 identity1" style="display: none">
                     <div class="broker2 nav-btn2 ck" @click="ck($event,1)"><span class="bd"></span>推荐经纪人</div>
                     <div class="tourist2 nav-btn2 ck" @click="ck($event,2)"><span class="bd"></span>推荐客户</div>
                 </div>
-                <!--<div class="tourist-btn">
+                <div class="tourist-btn identity2" style="display: none">
                     推荐客户
-                </div>-->
+                </div>
                 <div class="img2" id="qrcode">
-                    <div id="broker-canvas" style="display: none">
+                    <div id="broker-canvas" class="identity1" style="display: none">
                         <canvas @click="amplification($event)"></canvas>
                         <div class="lbOverlay" @click="close"></div>
                         <img class="hidden_pro_au"  @click="close" style="display: none"/>
@@ -254,8 +254,13 @@
                         <div class="lbOverlay" @click="close"></div>
                         <img class="hidden_pro_au" @click="close" style="display: none"/>
                     </div>
-                </div>
 
+                    <div id="tourist-canvas2" class="identity2" style="display: none">
+                        <canvas @click="amplification($event)"></canvas>
+                        <div class="lbOverlay" @click="close"></div>
+                        <img class="hidden_pro_au" @click="close" style="display: none"/>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -276,17 +281,15 @@ import QRCode from 'qrcode';  //npm i QRCode --save
 export default {
     data() {
         return {
-            downloadButton: false,
-            config: {
-                value: 'https://baidu.com',
-                imagePath: '../../../static/images/a.jpg',
-                filter: 'color',
-                size: 300
-            }
+
         }
     },
     mounted: function () {
-        this.qrcode();
+        this.setShareUser();
+        var $this = this;
+        $this.getOpenId().then(user => {
+            $this.qrcode(user);
+        });
     },
     methods: {
         ck: function (event,tab) {
@@ -311,21 +314,28 @@ export default {
                 $('#tourist-canvas').show();
             }
         },
-        qrcode() {
-            var canvasArrays = ['#broker-canvas','#tourist-canvas'];
+        qrcode(user) {
+            var canvasArrays = [];
+            if(user.identity == 1){
+                $('.identity2').show();
+                canvasArrays.push({id:'#tourist-canvas2',identity:1});
+            }else{
+                $('.identity1').show();
+                canvasArrays.push({id:'#broker-canvas',identity:2});
+                canvasArrays.push({id:'#tourist-canvas',identity:1});
+            }
             for(var x=0; x<canvasArrays.length; x++){
                 var canvasId = canvasArrays[x];
-                var url = 'https://www.baidu.com';
+                var url = this.$global.baseUrl + '/register?shareUser=' + JSON.stringify(user) + '&identity='+canvasId.identity;
                 if(x == 0){
-                    $(canvasId).show();
+                    $(canvasId.id).show();
                     $('.nav-btn2').eq(0).css('color','red');
-                    url = 'http://www.12306.cn';
                 }
-                var canvas = $(canvasId).find('canvas')[0];
+                var canvas = $(canvasId.id).find('canvas')[0];
                 var widhth = $('#qrcode').width();
                 QRCode.toCanvas(canvas, url,{width:widhth,height:widhth}, function (error) {
                 })
-                $(canvasId).find('img').attr('src',this.convertCanvasToImage(canvas));
+                $(canvasId.id).find('img').attr('src',this.convertCanvasToImage(canvas));
             }
 
         },
