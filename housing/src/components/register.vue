@@ -166,6 +166,19 @@
     .password {
         background-image: url("../../static/images/logn_password@2x.png");
     }
+    .phone{
+        background-image: url("../../static/images/icon_phone2x.png");
+        background-size: 15px!important;
+    }
+
+    .idcard{
+        background-image: url("../../static/images/icon_idcard.png");
+        background-size: 22px!important;
+    }
+    .certificate{
+        background-image: url("../../static/images/icon_certificate.png");
+        background-size: 22px!important;
+    }
 
     .input-wrap {
         padding: 5px 10px;
@@ -181,6 +194,9 @@
     .input-wrap:last-child {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+    }
+    .input-wrap:not(:last-child){
+        border-bottom: 1px solid #d4d4d4;
     }
 
     .form {
@@ -239,13 +255,25 @@
         </header>
         <div class="content">
             <div class="form">
-                <div class="input-wrap" style="border-bottom: 1px solid #d4d4d4;">
+                <div class="input-wrap">
                     <i class="user"></i>
                     <input type="text" placeholder="用户名" class="txt" id="username" value=""/>
                 </div>
                 <div class="input-wrap">
                     <i class="password"></i>
                     <input type="password" placeholder="密码" class="txt" id="password" value=""/>
+                </div>
+                <div class="input-wrap">
+                    <i class="phone"></i>
+                    <input type="text" placeholder="手机号码" class="txt" id="phone" value=""/>
+                </div>
+                <div class="input-wrap" v-if="identity == 2">
+                    <i class="certificate"></i>
+                    <input type="text" placeholder="资质证书" class="txt" id="certificate" value=""/>
+                </div>
+                <div class="input-wrap" v-if="identity == 2">
+                    <i class="idcard"></i>
+                    <input type="text" placeholder="身份证号码" class="txt" id="idcard" value=""/>
                 </div>
             </div>
             <footer class="footer">
@@ -263,15 +291,22 @@
 <script>
 export default {
     data() {
-        return {msg: '这个是模板页'}
+        return {
+            identity:1
+        }
     },
     mounted:function () {
         this.setShareUser();
+        var identity = this.$route.query.identity;
+        if(identity){
+            sessionStorage.setItem('identity',identity);
+        }
+        var identity = sessionStorage.getItem('identity');
+        this.identity = identity?identity:this.identity;
     },
     methods:{
         register:function () {
             this.getShareUser(); //获取分享者
-            alert('register__user__'+this.getShareUser());
         },
         login:function () {
             this.$router.push({path:'/login'});

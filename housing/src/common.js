@@ -15,7 +15,10 @@ export default {
          * 保存分享者的openid
          */
         Vue.prototype.setShareUser = function () {
-            sessionStorage.setItem('share_openid',this.$route.query.shareUser?this.$route.query.shareUser:'');
+            var shareUser = this.$route.query.shareUser;
+            if(shareUser){
+                sessionStorage.setItem('share_openid',shareUser?shareUser:'');
+            }
         };
 
         /**
@@ -79,6 +82,9 @@ export default {
                     //alert('错误_2_' + JSON.stringify(error));
                     return Promise.resolve(error);
                 });
+            }else{
+                this.auth();
+                return;
             }
             return Promise.resolve('');;
         };

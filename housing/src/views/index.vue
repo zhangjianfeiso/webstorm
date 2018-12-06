@@ -54,10 +54,6 @@ export default {
     mounted:function () {
         this.setShareUser();
         this.getOpenId().then(user => {
-            if(!user || !user.openid){
-                this.auth();
-                return;
-            }
             this.share({title:'自定义朋友圈',
                 desc:'这是描述',
                 link: this.$global.baseUrl + '?shareUser=' + JSON.stringify(user),
