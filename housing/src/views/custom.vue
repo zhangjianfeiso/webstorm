@@ -1,13 +1,13 @@
 <style scoped>
-    body {
-        background-color: #ff0000;
-    }
+
 </style>
 
 
 <template>
     <div>
-        <h1>This is custom ...{{ this.$route.query.curMenu }}</h1>
+        <div class="contains"  id="img_contains">
+            <vlist></vlist>
+        </div>
         <vmenu></vmenu>
     </div>
 </template>
@@ -15,6 +15,9 @@
 
 <script>
 import vmenu from '@/components/menu.vue'
+import vlist from '@/views/custom/list.vue'
+
+
 export default {
     mounted:function () {
         this.setShareUser();
@@ -29,6 +32,6 @@ export default {
     data() {
         return {msg: '这个是Home模板页'}
     },
-    components: {vmenu}
+    components: {vmenu,vlist}
 }
 </script>

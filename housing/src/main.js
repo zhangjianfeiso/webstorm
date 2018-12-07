@@ -27,6 +27,10 @@ new Vue({
     components: {App},
     template: '<App/>',
     mounted:function () {
+        //检测是否为微信客户端
+        if(!this.$global.dev){
+            this.isWx();
+        }
         //获取分享者openid
         this.setShareUser();
     },

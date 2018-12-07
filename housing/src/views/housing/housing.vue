@@ -480,76 +480,7 @@
             </div>
 
         </dl>
-        <dl>
-            <dt><span>爆款专区</span><span>更多 ></span></dt>
-            <div class="dl-group">
-                <dd class="img" onclick="toDetail()" tapmode="">
-                    <!--<img src="../../../static/images/t7.jpg" class="lazy" data-original="img/example.jpg">-->
-                    <img :data-original="baseUrl + '/img/download?t=4'" class="lazy">
 
-                    <div class="lable">10月27日 | 北京出发</div>
-                </dd>
-                <dd class="detail">
-                    北京-台湾高雄-台东花莲双飞7晚8日游<br>
-                    报名送韩国 101登顶 北京起飞
-                </dd>
-                <dd class="price">
-                    <span class="newPrice">￥3399</span>
-                </dd>
-            </div>
-        </dl>
-
-        <dl>
-            <dt><span>0元购专区</span><span>更多 ></span></dt>
-
-            <div class="dl-group">
-                <dd class="img" onclick="toDetail()" tapmode="">
-                    <img :data-original="baseUrl + '/img/download?t=3'" class="lazy">
-                    <!--<img src="../../../static/images/t8.jpg" class="lazy" data-original="img/example.jpg">-->
-                    <div class="lable">10月28日 | 北京出发</div>
-                </dd>
-                <dd class="detail">
-                    东京-横滨-京都-富士山6日游<br>
-                    途牛独家包团，EY全网最低价
-                </dd>
-                <dd class="zero-buy">
-                    <div class="price">
-                        <span class="newPrice">￥0</span>
-                        <del class="oldPrice">￥6599</del>
-                    </div>
-                    <div class="buy">立即抢购</div>
-                </dd>
-            </div>
-            <div class="dl-group">
-                <dd class="img" onclick="toDetail()" tapmode="">
-                    <img :data-original="baseUrl + '/img/download?t=2'" class="lazy">
-                    <!--<img src="../../../static/images/t9.jpg" class="lazy" data-original="img/example.jpg">-->
-
-                    <div class="lable">10月28日 | 北京出发</div>
-                </dd>
-                <dd class="detail">
-                    东京银座5日自助游<br>
-                    东京血拼，购物游玩的不二选择
-                </dd>
-                <dd class="zero-buy">
-                    <div class="price">
-                        <span class="newPrice">￥0</span>
-                        <del class="oldPrice">￥4599</del>
-                    </div>
-                    <div class="buy">立即抢购</div>
-                </dd>
-            </div>
-        </dl>
-        <dl>
-            <dt><span>每日精选</span><span></span></dt>
-            <div class="dl-group">
-                <dd class="img" onclick="toDetail()" tapmode="">
-                    <img data-original="http://47.107.129.140/5.jpg" class="lazy">
-                    <!--<img src="../../../static/images/t10.jpg" class="lazy" data-original="img/example.jpg">-->
-                    <div class="lable">10月29日 | 北京出发</div>
-                </dd>
-            </div>
-        </dl>
     </div>
 </template>
 
