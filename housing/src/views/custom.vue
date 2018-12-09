@@ -1,11 +1,25 @@
 <style scoped>
-
+    .contains{
+        position: absolute;
+        left: 0!important;
+        bottom: 0!important;
+        width: 100%!important;
+        z-index: 0!important;
+        overflow: scroll;
+        overflow-x: hidden;
+        height: 90%;
+        top: 32px;
+        margin: 0;
+    }
 </style>
 
 
 <template>
     <div>
-        <div class="contains"  id="img_contains">
+        <div class="search-contains">
+            <vheader :headeritle="headeritle"></vheader>
+        </div>
+        <div class="contains">
             <vlist></vlist>
         </div>
         <vmenu></vmenu>
@@ -16,6 +30,7 @@
 <script>
 import vmenu from '@/components/menu.vue'
 import vlist from '@/views/custom/list.vue'
+import vheader from '@/components/header.vue'
 
 
 export default {
@@ -30,8 +45,10 @@ export default {
 
     },
     data() {
-        return {msg: '这个是Home模板页'}
+        return {
+            headeritle:'我的客户'
+        }
     },
-    components: {vmenu,vlist}
+    components: {vmenu,vlist,vheader}
 }
 </script>

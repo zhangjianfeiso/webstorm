@@ -11,6 +11,8 @@ import vdetail from '@/views/housing/detail.vue'
 import vqrcode from '@/views/qrcode/qrcode.vue'
 import vwarn from '@/components/warn.vue'
 
+
+
 Vue.use(Router)
 
 export default new Router({
