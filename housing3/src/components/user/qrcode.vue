@@ -2,6 +2,9 @@
     header{
         border-bottom:1px solid;
     }
+    .tabs{
+        width:100%;
+    }
 </style>
 
 <template>
@@ -15,7 +18,7 @@
 
             <div v-if="state == 1">
                 <yd-flexbox direction="vertical">
-                    <yd-tab v-model="tab1">
+                    <yd-tab v-model="tab1" :class="tabs">
                         <yd-tab-panel label="推荐经纪人">
                             <yd-flexbox-item>
                                 <div style="height: 50px;"></div>
@@ -45,6 +48,7 @@
     export default {
         data() {
             return {
+                tabs:'tabs',
                 state: 1,
                 navbar: '我的二维码',
                 tab1:0

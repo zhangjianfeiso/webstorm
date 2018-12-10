@@ -21,6 +21,10 @@
 <template>
     <div>
         <yd-layout>
+            <!-- 回到顶部 -->
+            <yd-backtop></yd-backtop>
+
+
             <!-- 头部开始 -->
             <yd-navbar slot="navbar" :title="navbar">
                 <router-link to="/custom" slot="left">
@@ -49,52 +53,51 @@
             <!-- 搜索开始 -->
             <yd-tab v-model="tab2" :callback="fn" :prevent-default="false" :item-click="itemClick">
                 <yd-tab-panel v-for="(item,index) in items" :label="item.label" :key="index">
-                    <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
-                        <yd-list theme="4" slot="list">
-                            <yd-list-item v-for="item, key in item.content" :key="key" :class="detailScroll" @click.native="gotoProgress">
-                                <img slot="img" :src="item.img">
-                                <span slot="title">{{item.title}}</span>
-                                <yd-list-other slot="other">
-                                    <div>
-                                        <span class="list-price">所在区域：</span>
-                                        <span class="list-price">{{item.marketprice}}</span>
-                                    </div>
-                                    <div>
-                                        <span class="list-price">楼盘类型：</span>
-                                        <span class="list-del-price">{{item.productprice}}</span>
-                                    </div>
-                                    <div></div>
-                                </yd-list-other>
-
-                                <yd-list-other slot="other">
-                                    <div>
-                                        <span class="list-price">楼盘价格：</span>
-                                        <span class="list-del-price">{{item.price}}</span>
-                                    </div>
-                                    <div></div>
-                                </yd-list-other>
-                                <yd-list-other slot="other">
-                                    <div>
-                                        <span class="list-price">李佳奇</span>
-                                        <span class="list-del-price">18551154098</span>
-                                    </div>
-                                    <div></div>
-                                </yd-list-other>
-
-                            </yd-list-item>
-                        </yd-list>
-                        <!-- 数据全部加载完毕显示 -->
-                        <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
-                        <!-- 加载中提示，不指定，将显示默认加载中图标 -->
-                        <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
-                    </yd-infinitescroll>
                 </yd-tab-panel>
             </yd-tab>
             <!-- 搜索结束 -->
 
 
             <!-- 主体内容开始 -->
+            <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo" v-for="i,k in items" :key="k" v-if="k == tab2">
+                <yd-list theme="4" slot="list">
+                    <yd-list-item v-for="item, key in list" :key="key" :class="detailScroll" @click.native="gotoProgress">
+                        <img slot="img" :src="item.img">
+                        <span slot="title">{{item.title}}_{{ k }}</span>
+                        <yd-list-other slot="other">
+                            <div>
+                                <span class="list-price">所在区域：</span>
+                                <span class="list-price">{{item.marketprice}}</span>
+                            </div>
+                            <div>
+                                <span class="list-price">楼盘类型：</span>
+                                <span class="list-del-price">{{item.productprice}}</span>
+                            </div>
+                            <div></div>
+                        </yd-list-other>
 
+                        <yd-list-other slot="other">
+                            <div>
+                                <span class="list-price">楼盘价格：</span>
+                                <span class="list-del-price">{{item.price}}</span>
+                            </div>
+                            <div><img slot="icon" style="height: 20px;" src="../../../static/images/icon_right_2x.png"></div>
+                        </yd-list-other>
+                        <yd-list-other slot="other">
+                            <div>
+                                <span class="list-price">李佳奇</span>
+                                <span class="list-del-price">18551154098</span>
+                            </div>
+                            <div></div>
+                        </yd-list-other>
+
+                    </yd-list-item>
+                </yd-list>
+                <!-- 数据全部加载完毕显示 -->
+                <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+                <!-- 加载中提示，不指定，将显示默认加载中图标 -->
+                <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
+            </yd-infinitescroll>
             <!-- 主体内容结束 -->
 
 
@@ -172,18 +175,22 @@ export default {
             navbar:'客户详情',
             tab2: 0,
             items: [
-                {label: '预约', content: list},
-                {label: '到访', content:  list},
-                {label: '认筹', content:  list},
-                {label: '认购', content:  list}
+                {label: '预约',content: {}},
+                {label: '到访',content: {}},
+                {label: '认筹',content: {}},
+                {label: '认购',content: {}}
             ],
-            page: 1,
-            pageSize: 10
+            page: [1,1,1,1],
+            pageSize: 10,
+            list:list
         }
     },
-    mounted:function () {
-        this.input1 = this.$route.query.name?this.$route.query.name:'';
+    created(){
         this.tab2 = this.$route.query.state?(this.$route.query.state - 1):0;
+        this.input1 = this.$route.query.name?this.$route.query.name:'';
+    },
+    mounted:function () {
+
     },
     methods: {
         gotoProgress(){
@@ -196,30 +203,30 @@ export default {
             this.$dialog.loading.open('数据加载中');
             setTimeout(() => {
                 this.tab2 = key;
-                this.page = 1;
+                this.page[this.tab2] = 1;
                 this.$dialog.loading.close();
                // this.items[key].content = {name:'新内容【key:' + key + '】',states:'新内容_' + new Date().getTime()};
             }, 1000);
         },
         loadList() {
-            console.info('=======',this.page);
+            console.info(this.tab2+'=======',this.page[this.tab2]);
             var that = this;
             this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
                 params: {
-                    page: this.page,
+                    page: this.page[this.tab2],
                     pagesize: this.pageSize
                 }
             }).then(function (response) {
                 const _list = response.body;
-                this.items[this.tab2].content = [...this.items[this.tab2].content, ..._list];
-                if (_list.length < this.pageSize || this.page == 3) {
+                this.list = [...this.list, ..._list];
+                if (_list.length < this.pageSize || this.page[this.tab2] == 3) {
                     /* 所有数据加载完毕 */
-                    this.$refs.infinitescrollDemo[that.tab2].$emit('ydui.infinitescroll.loadedDone');
+                    this.$refs.infinitescrollDemo[0].$emit('ydui.infinitescroll.loadedDone');
                     return;
                 }
                 /* 单次请求数据完毕 */
-                this.$refs.infinitescrollDemo[that.tab2].$emit('ydui.infinitescroll.finishLoad');
-                this.page++;
+                this.$refs.infinitescrollDemo[0].$emit('ydui.infinitescroll.finishLoad');
+                this.page[this.tab2]++;
             });
         }
     },

@@ -9,12 +9,11 @@
     article .yd-list-item{
         border-bottom:1px solid rgb(228, 228, 228);
     }
-    /** 处理部分手机 （预约/到访/认筹/认购）中出现上边框的问题 */
+
     .yd-list-other:last-child{
         padding-top: 0;
         margin-top: 5px;
     }
-
 </style>
 
 
@@ -65,7 +64,9 @@
                             <div>
                                 <span class="list-del-price">{{item.productprice}}</span>
                             </div>
-                            <div></div>
+                            <div>
+                                <img slot="icon" style="height: 20px;" src="../../../static/images/icon_right_2x.png">
+                            </div>
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>

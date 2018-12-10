@@ -76,7 +76,7 @@
                     <span slot="left">我的二维码</span>
                     <span slot="right"></span>
                 </yd-cell-item>
-                <yd-cell-item arrow href="/user/qrcode" type="link">
+                <yd-cell-item arrow href="#" type="link">
                     <img slot="icon" style="height: 18px;" src="../../../static/images/icon_broker.png">
                     <span slot="left">我的经纪人</span>
                     <span slot="right"></span>

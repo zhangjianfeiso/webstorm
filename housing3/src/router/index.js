@@ -14,7 +14,7 @@ import vuser_info from '@/components/user/info'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    //mode: 'history',
     routes: [
         {path: '/', name: 'index',component: vindex},
         {path: '/custom', name: 'custom',component: vcustom,children:[

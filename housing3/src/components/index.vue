@@ -54,17 +54,17 @@
 
             <yd-slider autoplay="3000">
                 <yd-slider-item>
-                    <a href="http://www.ydcss.com">
+                    <a href="#">
                         <img src="../../static/images/1.jpg">
                     </a>
                 </yd-slider-item>
                 <yd-slider-item>
-                    <a href="http://www.ydcss.com">
+                    <a href="#">
                         <img src="../../static/images/2.jpg">
                     </a>
                 </yd-slider-item>
                 <yd-slider-item>
-                    <a href="http://www.ydcss.com">
+                    <a href="#">
                         <img src="../../static/images/3.jpg">
                     </a>
                 </yd-slider-item>
@@ -81,14 +81,14 @@
                                 <span class="list-price">{{item.marketprice}}</span>
                                 <span class="list-del-price">{{item.productprice}}</span>
                             </div>
-                            <div>content</div>
+                            <div></div>
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>
                                 <span class="list-price">{{item.marketprice}}</span>
                                 <span class="list-del-price">{{item.productprice}}</span>
                             </div>
-                            <div>content</div>
+                            <div><img slot="icon" style="height: 20px;" src="../../static/images/icon_right_2x.png"></div>
                         </yd-list-other>
                     </yd-list-item>
                 </yd-list>
@@ -186,6 +186,12 @@ export default {
         result1(ret) {
             console.info('ret___',ret);
             this.model1 = ret.itemName1 + ' ' + ret.itemName2 + ' ' + ret.itemName3;
+            this.$dialog.toast({
+                mes:ret.itemValue1 +' '+ret.itemValue2+' '+ret.itemValue3,
+                timeout: 1500,
+                icon: 'success'
+            });
+
         },
         loadList() {
             this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
