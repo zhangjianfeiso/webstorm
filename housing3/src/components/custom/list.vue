@@ -3,6 +3,18 @@
         position: absolute;
         width: 100%;
     }
+    header{
+        border-bottom:1px solid;
+    }
+    article .yd-list-item{
+        border-bottom:1px solid rgb(228, 228, 228);
+    }
+    /** 处理部分手机 （预约/到访/认筹/认购）中出现上边框的问题 */
+    .yd-list-other:last-child{
+        padding-top: 0;
+        margin-top: 5px;
+    }
+
 </style>
 
 
@@ -10,10 +22,13 @@
     <div>
 
         <yd-layout>
+            <!-- 回到顶部 -->
+            <yd-backtop></yd-backtop>
+
             <!-- 头部开始 -->
             <yd-navbar slot="navbar" :title="navbar">
                 <router-link to="#" slot="right" @click.native="showAddr = true">
-                    <yd-icon name="search" size="25px" color="#777"></yd-icon>
+                    <yd-icon name="search" size="21px" color="#777"></yd-icon>
                 </router-link>
             </yd-navbar>
             <!-- 头部结束 -->
@@ -37,7 +52,7 @@
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
 
                 <yd-list theme="4" slot="list">
-                    <yd-list-item v-for="item, key in list" :key="key" type="link" href="/custom/detail?name=张三">
+                    <yd-list-item v-for="item, key in list" :key="key" type="link" href="/custom/detail?name=张三&id=1">
                         <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;">
                         <span slot="title">{{item.title}}</span>
                         <yd-list-other slot="other">
@@ -55,20 +70,20 @@
                         <yd-list-other slot="other">
                             <div>
                                 <span class="list-del-price">
-                                    <yd-tabbar border-color="white" id="flow-list">
-                                        <yd-tabbar-item title="预约" link="/custom/detail?name=张三&state=1" active>
+                                    <yd-tabbar id="flow-list">
+                                        <yd-tabbar-item title="预约" link="/custom/detail?name=张三&state=1&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" scale=".7">12</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="到访" link="/custom/detail?name=张三&state=2" active>
+                                        <yd-tabbar-item title="到访" link="/custom/detail?name=张三&state=2&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="warning" scale=".7">12</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="认筹" link="/custom/detail?name=张三&state=3" active>
+                                        <yd-tabbar-item title="认筹" link="/custom/detail?name=张三&state=3&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="danger" scale=".7">12</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="认购" link="/custom/detail?name=张三&state=4" active>
+                                        <yd-tabbar-item title="认购" link="/custom/detail?name=张三&state=4&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="primary" scale=".7">12</yd-badge>
                                         </yd-tabbar-item>
@@ -98,7 +113,7 @@
                 <yd-tabbar-item title="动态" link="#">
                     <img slot="icon" style="height: 25px;" src="../../../static/images/icon_dynamic.png">
                 </yd-tabbar-item>
-                <yd-tabbar-item title="我的" link="/my">
+                <yd-tabbar-item title="我的" link="/user">
                     <img slot="icon" style="height: 25px;" src="../../../static/images/icon_my.png">
                 </yd-tabbar-item>
             </yd-tabbar>

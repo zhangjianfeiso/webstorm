@@ -4,8 +4,12 @@ import vindex from '@/components/index'
 import vcustom from '@/components/custom'
 import vcustom_list from '@/components/custom/list'
 import vcustom_detail from '@/components/custom/detail'
-import vmy from '@/components/my'
-import vmy_list from '@/components/my/list'
+import vcustom_progress from '@/components/custom/progress'
+
+import vuser from '@/components/user'
+import vuser_list from '@/components/user/list'
+import vuser_qrcode from '@/components/user/qrcode'
+import vuser_info from '@/components/user/info'
 
 Vue.use(Router)
 
@@ -15,10 +19,13 @@ export default new Router({
         {path: '/', name: 'index',component: vindex},
         {path: '/custom', name: 'custom',component: vcustom,children:[
             {path:'',name:'custom_list',component:vcustom_list},
-            {path:'detail',name:'detail',component:vcustom_detail}
+            {path:'detail',name:'detail',component:vcustom_detail},
+            {path:'progress',name:'progress',component:vcustom_progress}
         ]},
-        {path: '/my', name:'my',component:vmy,children:[
-            {path:'',name:'my_list',component:vmy_list}
+        {path: '/user', name:'user',component:vuser,children:[
+            {path:'',name:'user_list',component:vuser_list},
+            {path:'qrcode',name:'user_qrcode',component:vuser_qrcode},
+            {path:'info',name:'user_info',component:vuser_info}
         ]}
     ]
 })

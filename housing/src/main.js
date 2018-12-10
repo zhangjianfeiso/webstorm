@@ -10,27 +10,6 @@ import common from './common.js';
 
 
 
-
-
-
-
-
-/** jdui */
-import ydui from 'vue-ydui'; /* 相当于import YDUI from 'vue-ydui/ydui.rem.js' */
-import 'vue-ydui/dist/ydui.rem.css';
-/* 使用px：import 'vue-ydui/dist/ydui.px.css'; */
-Vue.use(ydui);
-/** 头部导航 */
-import {NavBar, NavBarBackIcon, NavBarNextIcon} from 'vue-ydui/dist/lib.rem/navbar';
-Vue.component(NavBar.name, NavBar);
-Vue.component(NavBarBackIcon.name, NavBarBackIcon);
-Vue.component(NavBarNextIcon.name, NavBarNextIcon);
-
-
-
-
-
-
 Vue.use(vue_resource);
 Vue.use(wx);
 Vue.use(common);

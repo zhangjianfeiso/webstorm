@@ -3,6 +3,18 @@
         position: absolute;
         width: 100%;
     }
+    article .yd-list-item:first-child{
+        border-top:1px solid rgb(228, 228, 228);
+    }
+    article .yd-list-item{
+        border-bottom:1px solid rgb(228, 228, 228);
+    }
+    .detail-scroll .yd-list-img{
+        height: 95px!important;
+    }
+    .yd-list-img img{
+        height:95px;
+    }
 </style>
 
 
@@ -14,16 +26,68 @@
                 <router-link to="/custom" slot="left">
                     <yd-navbar-back-icon></yd-navbar-back-icon>
                 </router-link>
+                <router-link to="#" slot="right" @click.native="showSearch = true">
+                    <yd-icon name="search" size="21px" color="#777"></yd-icon>
+                </router-link>
             </yd-navbar>
             <!-- 头部结束 -->
 
             <!-- 搜索开始 -->
+            <yd-popup v-model="showSearch" position="left" width="70%">
+                <yd-cell-item arrow type="label">
+                    <span slot="left">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+                    <yd-input slot="right" v-model="input1" max="20" placeholder="请输入姓名"></yd-input>
+                </yd-cell-item>
+                <yd-cell-item>
+                    <span slot="left">手机号：</span>
+                    <yd-input slot="right" v-model="input2" max="20" regex="mobile" placeholder="请输入手机号码"></yd-input>
+                </yd-cell-item>
+            </yd-popup>
+            <!-- 搜索结束 -->
+
+
+            <!-- 搜索开始 -->
             <yd-tab v-model="tab2" :callback="fn" :prevent-default="false" :item-click="itemClick">
-                <yd-tab-panel v-for="item in items" :label="item.label">
+                <yd-tab-panel v-for="(item,index) in items" :label="item.label" :key="index">
+                    <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
+                        <yd-list theme="4" slot="list">
+                            <yd-list-item v-for="item, key in item.content" :key="key" :class="detailScroll" @click.native="gotoProgress">
+                                <img slot="img" :src="item.img">
+                                <span slot="title">{{item.title}}</span>
+                                <yd-list-other slot="other">
+                                    <div>
+                                        <span class="list-price">所在区域：</span>
+                                        <span class="list-price">{{item.marketprice}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="list-price">楼盘类型：</span>
+                                        <span class="list-del-price">{{item.productprice}}</span>
+                                    </div>
+                                    <div></div>
+                                </yd-list-other>
 
-                    <div>{{ item.content.name }}</div>
-                    <div>{{ item.content.states }}</div>
+                                <yd-list-other slot="other">
+                                    <div>
+                                        <span class="list-price">楼盘价格：</span>
+                                        <span class="list-del-price">{{item.price}}</span>
+                                    </div>
+                                    <div></div>
+                                </yd-list-other>
+                                <yd-list-other slot="other">
+                                    <div>
+                                        <span class="list-price">李佳奇</span>
+                                        <span class="list-del-price">18551154098</span>
+                                    </div>
+                                    <div></div>
+                                </yd-list-other>
 
+                            </yd-list-item>
+                        </yd-list>
+                        <!-- 数据全部加载完毕显示 -->
+                        <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+                        <!-- 加载中提示，不指定，将显示默认加载中图标 -->
+                        <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
+                    </yd-infinitescroll>
                 </yd-tab-panel>
             </yd-tab>
             <!-- 搜索结束 -->
@@ -36,7 +100,7 @@
 
 
 
-            <yd-tabbar slot="tabbar">
+            <!--<yd-tabbar slot="tabbar">
                 <yd-tabbar-item title="首页" link="/">
                     <img slot="icon" style="height: 25px;" src="../../../static/images/icon_home.png">
                 </yd-tabbar-item>
@@ -46,10 +110,10 @@
                 <yd-tabbar-item title="动态" link="#">
                     <img slot="icon" style="height: 25px;" src="../../../static/images/icon_dynamic.png">
                 </yd-tabbar-item>
-                <yd-tabbar-item title="我的" link="#">
+                <yd-tabbar-item title="我的" link="/user">
                     <img slot="icon" style="height: 25px;" src="../../../static/images/icon_my.png">
                 </yd-tabbar-item>
-            </yd-tabbar>
+            </yd-tabbar>-->
 
         </yd-layout>
     </div>
@@ -57,24 +121,74 @@
 
 
 <script>
+   var list = [
+       {
+           img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+           title: "碧桂园",
+           marketprice: '广东省',
+           productprice: '住宅区',
+           price:'10500元/平米'
+       },
+       {
+           img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
+           title: "碧桂园",
+           marketprice: 56.23,
+           productprice: 89.36
+       },
+       {
+           img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
+           title: "碧桂园",
+           marketprice: 56.23,
+           productprice: 89.36
+       },
+       {
+           img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
+           title: "碧桂园",
+           marketprice: 56.23,
+           productprice: 89.36
+       },
+       {
+           img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
+           title: "碧桂园",
+           marketprice: 56.23,
+           productprice: 89.36
+       },
+       {
+           img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
+           title: "碧桂园",
+           marketprice: 56.23,
+           productprice: 89.36
+       }
+   ];
+
+
 export default {
     data() {
         return {
+            detailScroll:'detail-scroll',
+            showSearch:false,
+            input1:'',
+            input2:'',
             navbar:'客户详情',
             tab2: 0,
             items: [
-                {label: '预约', content: {name:'张三',states:'预约成功'}},
-                {label: '到访', content:  {name:'李四',states:'到访成功'}},
-                {label: '认筹', content:  {name:'王五',states:'认筹成功'}},
-                {label: '认购', content:  {name:'王麻子',states:'认购成功'}}
-            ]
+                {label: '预约', content: list},
+                {label: '到访', content:  list},
+                {label: '认筹', content:  list},
+                {label: '认购', content:  list}
+            ],
+            page: 1,
+            pageSize: 10
         }
     },
     mounted:function () {
-        console.info(this.$route.query.name);
+        this.input1 = this.$route.query.name?this.$route.query.name:'';
         this.tab2 = this.$route.query.state?(this.$route.query.state - 1):0;
     },
     methods: {
+        gotoProgress(){
+            this.$router.push({path:'progress'});
+        },
         fn(label, key) {
             console.log(label, key);
         },
@@ -82,9 +196,31 @@ export default {
             this.$dialog.loading.open('数据加载中');
             setTimeout(() => {
                 this.tab2 = key;
+                this.page = 1;
                 this.$dialog.loading.close();
-                this.items[key].content = {name:'新内容【key:' + key + '】',states:'新内容_' + new Date().getTime()};
+               // this.items[key].content = {name:'新内容【key:' + key + '】',states:'新内容_' + new Date().getTime()};
             }, 1000);
+        },
+        loadList() {
+            console.info('=======',this.page);
+            var that = this;
+            this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+                params: {
+                    page: this.page,
+                    pagesize: this.pageSize
+                }
+            }).then(function (response) {
+                const _list = response.body;
+                this.items[this.tab2].content = [...this.items[this.tab2].content, ..._list];
+                if (_list.length < this.pageSize || this.page == 3) {
+                    /* 所有数据加载完毕 */
+                    this.$refs.infinitescrollDemo[that.tab2].$emit('ydui.infinitescroll.loadedDone');
+                    return;
+                }
+                /* 单次请求数据完毕 */
+                this.$refs.infinitescrollDemo[that.tab2].$emit('ydui.infinitescroll.finishLoad');
+                this.page++;
+            });
         }
     },
     components: {}

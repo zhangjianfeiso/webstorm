@@ -4,21 +4,38 @@
         position: absolute;
         width: 100%;
     }
+    header{
+        border-bottom:1px solid;
+    }
+    article .yd-list-item{
+        border-bottom:1px solid rgb(228, 228, 228);
+    }
+    .yd-slider{
+        height:160px;
+    }
+    .yd-slider img{
+        height:160px;
+    }
 </style>
 
 <template>
     <div class="hello">
+
         <yd-layout>
+            <!-- 回到顶部 -->
+            <yd-backtop></yd-backtop>
+
+
             <!-- 头部开始 -->
             <yd-navbar slot="navbar" :title="navbar">
                 <router-link to="#" slot="right" @click.native="showAddr = true" :callback="closeSearch">
-                    <yd-icon name="search" size="25px" color="#777"></yd-icon>
+                    <yd-icon name="search" size="21px" color="#777"></yd-icon>
                 </router-link>
             </yd-navbar>
             <!-- 头部结束 -->
 
             <!-- 搜索开始 -->
-            <yd-popup v-model="showAddr" position="left" width="70%">
+            <yd-popup v-model="showAddr" position="left" width="80%">
                 <yd-cell-group>
                     <yd-cell-item>
                         <span slot="left">
@@ -35,7 +52,23 @@
             </yd-popup>
             <!-- 搜索结束 -->
 
-
+            <yd-slider autoplay="3000">
+                <yd-slider-item>
+                    <a href="http://www.ydcss.com">
+                        <img src="../../static/images/1.jpg">
+                    </a>
+                </yd-slider-item>
+                <yd-slider-item>
+                    <a href="http://www.ydcss.com">
+                        <img src="../../static/images/2.jpg">
+                    </a>
+                </yd-slider-item>
+                <yd-slider-item>
+                    <a href="http://www.ydcss.com">
+                        <img src="../../static/images/3.jpg">
+                    </a>
+                </yd-slider-item>
+            </yd-slider>
             <!-- 主体内容开始 -->
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
 
@@ -79,7 +112,7 @@
                 <yd-tabbar-item title="动态" link="#">
                     <img slot="icon" style="height: 25px;" src="../../static/images/icon_dynamic.png">
                 </yd-tabbar-item>
-                <yd-tabbar-item title="我的" link="/my">
+                <yd-tabbar-item title="我的" link="/user">
                     <img slot="icon" style="height: 25px;" src="../../static/images/icon_my.png">
                 </yd-tabbar-item>
             </yd-tabbar>
@@ -107,7 +140,7 @@ export default {
                 {
                     img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
                     title: "碧桂园",
-                    marketprice: '碧桂园，给你个五星级的家-碧桂园，给你个五星级的家-碧桂园，给你个五星级的家',
+                    marketprice: '碧桂园给你个五星级的家-碧桂园',
                     productprice: ''
                 },
                 {
