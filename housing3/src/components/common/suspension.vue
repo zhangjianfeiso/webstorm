@@ -1,6 +1,6 @@
 <!-- 悬浮报备插件 -->
 <style scoped>
-    .barrage{position:fixed;display:block;top:22%;right:0;z-index: 1000;}
+    .barrage{position:fixed;display:block;top:22%;right:0;z-index: 10000;}
     .barrage_name{width:44px;height:44px;background:-webkit-gradient(linear,0 0,100% 100%,from(#f00), to(#0f0));border-radius:50%;}
     .barrage_name_hover{width:44px;height:44px;background:-webkit-gradient(linear,0 0,100% 100%,from(#ff0), to(#00f));border-radius:50%;}
     .col1{color:#fff;display: block;padding: 12px 0px 0px 0px;text-align: center;}
@@ -21,12 +21,12 @@
         data() {
             return {
                 msg: 'vue模板页',
-                suspension:false
+                suspension:true
             }
         },
         mounted:function () {
             this.dragPanelMove();
-            this.suspension = localStorage.getItem('suspension')?(localStorage.getItem('suspension') == 'true'):false;
+            this.suspension = localStorage.getItem('suspension')?(localStorage.getItem('suspension') == 'true'):true;
         },
         methods:{
             dragPanelMove(){

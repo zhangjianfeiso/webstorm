@@ -13,9 +13,11 @@ import {CitySelect} from 'vue-ydui/dist/lib.rem/cityselect'
 import {Popup} from 'vue-ydui/dist/lib.rem/popup'
 import VueJsonp from 'vue-jsonp'
 import VueResource from 'vue-resource'
-import {ActionSheet} from 'vue-ydui/dist/lib.rem/actionsheet';
+import {ActionSheet} from 'vue-ydui/dist/lib.rem/actionsheet'
+import global from '@/components/common/global'
 
-Vue.component(ActionSheet.name, ActionSheet);
+Vue.prototype.$global = global
+Vue.component(ActionSheet.name, ActionSheet)
 Vue.use(VueResource)
 Vue.use(VueJsonp)
 Vue.use(YDUI)

@@ -61,17 +61,17 @@
             <!-- 主体内容开始 -->
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo" v-for="i,k in items" :key="k" v-if="k == tab2">
                 <yd-list theme="4" slot="list">
-                    <yd-list-item v-for="item, key in list" :key="key" :class="detailScroll" @click.native="gotoProgress">
+                    <yd-list-item v-for="item, key in details" :key="key" :class="detailScroll" @click.native="gotoProgress">
                         <img slot="img" :src="item.img">
-                        <span slot="title">{{item.title}}_{{ k }}</span>
+                        <span slot="title">{{item.houseName}}</span>
                         <yd-list-other slot="other">
                             <div>
                                 <span class="list-price">所在区域：</span>
-                                <span class="list-price">{{item.marketprice}}</span>
+                                <span class="list-price">{{item.area}}</span>
                             </div>
                             <div>
                                 <span class="list-price">楼盘类型：</span>
-                                <span class="list-del-price">{{item.productprice}}</span>
+                                <span class="list-del-price">{{item.type}}</span>
                             </div>
                             <div></div>
                         </yd-list-other>
@@ -85,8 +85,8 @@
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>
-                                <span class="list-price">李佳奇</span>
-                                <span class="list-del-price">18551154098</span>
+                                <span class="list-price">{{ item.name }}</span>
+                                <span class="list-del-price">{{ item.mobile }}</span>
                             </div>
                             <div></div>
                         </yd-list-other>
@@ -124,45 +124,6 @@
 
 
 <script>
-   var list = [
-       {
-           img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-           title: "碧桂园",
-           marketprice: '广东省',
-           productprice: '住宅区',
-           price:'10500元/平米'
-       },
-       {
-           img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
-           title: "碧桂园",
-           marketprice: 56.23,
-           productprice: 89.36
-       },
-       {
-           img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
-           title: "碧桂园",
-           marketprice: 56.23,
-           productprice: 89.36
-       },
-       {
-           img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
-           title: "碧桂园",
-           marketprice: 56.23,
-           productprice: 89.36
-       },
-       {
-           img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
-           title: "碧桂园",
-           marketprice: 56.23,
-           productprice: 89.36
-       },
-       {
-           img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-           title: "碧桂园",
-           marketprice: 56.23,
-           productprice: 89.36
-       }
-   ];
 
 
 export default {
@@ -182,12 +143,14 @@ export default {
             ],
             page: [1,1,1,1],
             pageSize: 10,
-            list:list
+            details:{},
+            list:[[],[],[],[]]
         }
     },
     created(){
         this.tab2 = this.$route.query.state?(this.$route.query.state - 1):0;
         this.input1 = this.$route.query.name?this.$route.query.name:'';
+        this.loadList();
     },
     mounted:function () {
 
@@ -205,20 +168,26 @@ export default {
                 this.tab2 = key;
                 this.page[this.tab2] = 1;
                 this.$dialog.loading.close();
+                console.info(this.list[this.tab2].length);
+                if(this.list[this.tab2].length == 0){
+                    this.loadList();
+                }else{
+                    this.details = this.list[this.tab2];
+                }
+
                // this.items[key].content = {name:'新内容【key:' + key + '】',states:'新内容_' + new Date().getTime()};
             }, 1000);
         },
         loadList() {
-            console.info(this.tab2+'=======',this.page[this.tab2]);
             var that = this;
-            this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+            this.$http.get(this.$global.apiUrl + '/custom/detail', {
                 params: {
                     page: this.page[this.tab2],
                     pagesize: this.pageSize
                 }
             }).then(function (response) {
-                const _list = response.body;
-                this.list = [...this.list, ..._list];
+                const _list = response.body.data;
+                this.list[this.tab2] = [...this.list[this.tab2], ..._list];
                 if (_list.length < this.pageSize || this.page[this.tab2] == 3) {
                     /* 所有数据加载完毕 */
                     this.$refs.infinitescrollDemo[0].$emit('ydui.infinitescroll.loadedDone');
@@ -227,6 +196,7 @@ export default {
                 /* 单次请求数据完毕 */
                 this.$refs.infinitescrollDemo[0].$emit('ydui.infinitescroll.finishLoad');
                 this.page[this.tab2]++;
+                this.details = this.list[this.tab2];
             });
         }
     },

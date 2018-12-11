@@ -33,11 +33,11 @@
         data() {
             return {
                 navbar: '插件',
-                suspension:false
+                suspension:true
             }
         },
         created:function () {
-            this.suspension = localStorage.getItem('suspension')?(localStorage.getItem('suspension') == 'true'):false;
+            this.suspension = localStorage.getItem('suspension')?(localStorage.getItem('suspension') == 'true'):true;
         },
         methods:{
             suspensionSwitch(){

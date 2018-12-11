@@ -52,17 +52,17 @@
 
                 <yd-list theme="4" slot="list">
                     <yd-list-item v-for="item, key in list" :key="key" type="link" href="/custom/detail?name=张三&id=1">
-                        <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;">
-                        <span slot="title">{{item.title}}</span>
+                        <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;height: 100px;border:1px solid rgb(228, 228, 228);">
+                        <span slot="title">{{ item.name }}</span>
                         <yd-list-other slot="other">
                             <div>
-                                <span class="list-price">{{item.marketprice}}</span>
+                                <span class="list-price">{{ item.mobile }}</span>
                             </div>
                             <div></div>
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>
-                                <span class="list-del-price">{{item.productprice}}</span>
+                                <span class="list-del-price">{{ item.addr }}</span>
                             </div>
                             <div>
                                 <img slot="icon" style="height: 15px;" src="../../../static/images/icon_right_2x.png">
@@ -74,19 +74,19 @@
                                     <yd-tabbar id="flow-list">
                                         <yd-tabbar-item title="预约" link="/custom/detail?name=张三&state=1&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
-                                            <yd-badge slot="badge" scale=".7">12</yd-badge>
+                                            <yd-badge slot="badge" scale=".7">{{ item.subscribe }}</yd-badge>
                                         </yd-tabbar-item>
                                         <yd-tabbar-item title="到访" link="/custom/detail?name=张三&state=2&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
-                                            <yd-badge slot="badge" type="warning" scale=".7">12</yd-badge>
+                                            <yd-badge slot="badge" type="warning" scale=".7">{{ item.visit }}</yd-badge>
                                         </yd-tabbar-item>
                                         <yd-tabbar-item title="认筹" link="/custom/detail?name=张三&state=3&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
-                                            <yd-badge slot="badge" type="danger" scale=".7">12</yd-badge>
+                                            <yd-badge slot="badge" type="danger" scale=".7">{{ item.recognition }}</yd-badge>
                                         </yd-tabbar-item>
                                         <yd-tabbar-item title="认购" link="/custom/detail?name=张三&state=4&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
-                                            <yd-badge slot="badge" type="primary" scale=".7">12</yd-badge>
+                                            <yd-badge slot="badge" type="primary" scale=".7">{{ item.buy }}</yd-badge>
                                         </yd-tabbar-item>
                                     </yd-tabbar>
                                 </span>
@@ -141,45 +141,11 @@ export default {
             district: District,
             page: 1,
             pageSize: 10,
-            list: [
-                {
-                    img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                    title: "张大柱",
-                    marketprice: '18551154098',
-                    productprice: '广东省，广州市，天河区'
-                },
-                {
-                    img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
-                    title: "李驰",
-                    marketprice: '18551154098',
-                    productprice: '湖南省，郴州市，汝城县'
-                },
-                {
-                    img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
-                    title: "王琦佳",
-                    marketprice: '18551154098',
-                    productprice: '广东省，东莞市，樟木头'
-                },
-                {
-                    img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
-                    title: "黄乐",
-                    marketprice: '18551154098',
-                    productprice: '广东省，深圳市，龙岗区'
-                },
-                {
-                    img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
-                    title: "夏雨横",
-                    marketprice: '18551154098',
-                    productprice: '广东省，佛山市'
-                },
-                {
-                    img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-                    title: "王丽",
-                    marketprice: '18551154098',
-                    productprice: '湖南省，益阳市，赫山区'
-                }
-            ]
+            list: []
         }
+    },
+    created:function () {
+        this.loadList();
     },
     methods: {
         gotoDetail(){
@@ -193,25 +159,21 @@ export default {
             this.model1 = ret.itemName1 + ' ' + ret.itemName2 + ' ' + ret.itemName3;
         },
         loadList() {
-            this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+            this.$http.get(this.$global.apiUrl + '/custom/list', {
                 params: {
                     page: this.page,
                     pagesize: this.pageSize
                 }
             }).then(function (response) {
-                const _list = response.body;
-
+                const _list = response.body.data;
                 this.list = [...this.list, ..._list];
-
                 if (_list.length < this.pageSize || this.page == 3) {
                     /* 所有数据加载完毕 */
                     this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
                     return;
                 }
-
                 /* 单次请求数据完毕 */
                 this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
-
                 this.page++;
             });
         }

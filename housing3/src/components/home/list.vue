@@ -79,26 +79,26 @@
                 <yd-list theme="4" slot="list">
                     <yd-list-item v-for="item, key in list" :key="key">
                         <img slot="img" :src="item.img" class="yd-img-item">
-                        <span slot="title">{{item.title}}</span>
-                        <span slot="title" style="float: right;" @click="collect(key)">
-                            <img v-if="key%3 == 0" slot="icon" style="height: 18px;" src="../../../static/images/icon_collect_black.png">
+                        <span slot="title">{{ item.name }}</span>
+                        <span slot="title" style="float: right;" @click="collect(item.id,item.collect)">
+                            <img v-if="!item.collect" slot="icon" style="height: 18px;" src="../../../static/images/icon_collect_black.png">
                             <img v-else slot="icon"  style="height: 18px;" src="../../../static/images/icon_already_collect_orange.png">
                         </span>
                         <yd-list-other slot="other">
                             <div>
                                 <span class="list-price">所在区域:</span>
-                                <span class="list-del-price">广东省</span>
+                                <span class="list-del-price">{{ item.area }}</span>
                             </div>
                             <div>
                                 <span class="list-price">楼盘类型:</span>
-                                <span class="list-del-price">住宅区</span>
+                                <span class="list-del-price">{{ item.type }}</span>
                             </div>
                             <div></div>
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>
                                 <span class="list-price">销售热线:</span>
-                                <span class="list-del-price">400-100-6888</span>
+                                <span class="list-del-price">{{ item.mobile }}</span>
                             </div>
                             <div><img slot="icon" style="height: 15px;" src="../../../static/images/icon_right_2x.png"></div>
                         </yd-list-other>
@@ -159,57 +159,29 @@
                 district: District,
                 page: 1,
                 pageSize: 10,
-                list: [
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "碧桂园",
-                        marketprice: '碧桂园给你个五星级的家-碧桂园',
-                        productprice: ''
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
-                        title: "骆驼男装2016夏装男士短袖T恤 圆领衣服 印花男装体恤 半袖打底衫",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
-                        title: "条纹短袖T恤男士韩版衣服大码潮流男装夏季圆领体恤2016新款半袖",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
-                        title: "夏季青少年衣服男生潮牌t恤 男士 夏秋学生 日系棉短袖半袖男小衫",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
-                        title: "2016夏装新款时尚潮流短袖T恤男纯棉V领日系青少年韩版夏季上衣服",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-                        title: "男装衣服男夏t恤 男士短袖t恤圆领夏季潮牌宽松原宿风半截袖男",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    }
-                ]
+                list: {}
             }
         },
+        created:function () {
+            this.loadList();
+        },
         methods: {
-            collect(index){
+            collect(id,collect){
                 console.info('=====');
                 this.$dialog.toast({
-                    mes: ((index%3) == 0)?'收藏成功！':'取消收藏！',
+                    mes: collect?'取消收藏！':'收藏成功！',
                     timeout: 1000,
-                    icon: ((index%3) == 0)?'success':'error'
+                    icon: collect?'error':'success'
                 });
-
+                var list = this.list;
+                for(var x=0; x<list.length; x++){
+                    if(list[x].id == id){
+                        list[x].collect = (!collect )
+                    }
+                }
             },
             closeSearch(){
+
                 console.info('============');
             },
             submitHandler(){
@@ -226,25 +198,22 @@
 
             },
             loadList() {
-                this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+                this.$http.get(this.$global.apiUrl + '/home/list', {
                     params: {
                         page: this.page,
                         pagesize: this.pageSize
                     }
                 }).then(function (response) {
-                    const _list = response.body;
-
+                    const _list = response.body.data;
+                    console.info('___',_list);
                     this.list = [...this.list, ..._list];
-
                     if (_list.length < this.pageSize || this.page == 3) {
                         /* 所有数据加载完毕 */
                         this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
                         return;
                     }
-
                     /* 单次请求数据完毕 */
                     this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
-
                     this.page++;
                 });
             }
