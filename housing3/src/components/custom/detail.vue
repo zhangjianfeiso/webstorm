@@ -81,7 +81,7 @@
                                 <span class="list-price">楼盘价格：</span>
                                 <span class="list-del-price">{{item.price}}</span>
                             </div>
-                            <div><img slot="icon" style="height: 20px;" src="../../../static/images/icon_right_2x.png"></div>
+                            <div><img slot="icon" style="height: 15px;" src="../../../static/images/icon_right_2x.png"></div>
                         </yd-list-other>
                         <yd-list-other slot="other">
                             <div>

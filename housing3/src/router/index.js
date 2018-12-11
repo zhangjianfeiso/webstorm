@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import vindex from '@/components/index'
+import vhome from '@/components/home'
+import vhome_list from '@/components/home/list'
+import vhome_records from '@/components/home/records'
+
 import vcustom from '@/components/custom'
 import vcustom_list from '@/components/custom/list'
 import vcustom_detail from '@/components/custom/detail'
@@ -10,13 +13,18 @@ import vuser from '@/components/user'
 import vuser_list from '@/components/user/list'
 import vuser_qrcode from '@/components/user/qrcode'
 import vuser_info from '@/components/user/info'
+import vuser_broker from '@/components/user/broker'
+import vuser_plug from '@/components/user/plug'
 
 Vue.use(Router)
 
 export default new Router({
     //mode: 'history',
     routes: [
-        {path: '/', name: 'index',component: vindex},
+        {path: '/', name: 'home',component: vhome,children:[
+            {path:'', name: 'home_list',component:vhome_list},
+            {path:'/records', name: 'home_records',component:vhome_records}
+        ]},
         {path: '/custom', name: 'custom',component: vcustom,children:[
             {path:'',name:'custom_list',component:vcustom_list},
             {path:'detail',name:'detail',component:vcustom_detail},
@@ -25,7 +33,9 @@ export default new Router({
         {path: '/user', name:'user',component:vuser,children:[
             {path:'',name:'user_list',component:vuser_list},
             {path:'qrcode',name:'user_qrcode',component:vuser_qrcode},
-            {path:'info',name:'user_info',component:vuser_info}
+            {path:'info',name:'user_info',component:vuser_info},
+            {path:'broker',name:'broker',component:vuser_broker},
+            {path:'plug',name:'plug',component:vuser_plug}
         ]}
     ]
 })

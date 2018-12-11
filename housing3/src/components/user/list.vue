@@ -18,6 +18,10 @@
         border-bottom:1px solid rgb(228, 228, 228);
         border-top:1px solid rgb(228, 228, 228);
     }
+    .settings-class .yd-actionsheet-item{
+        border-bottom:1px solid rgb(228, 228, 228);
+        border-top:1px solid rgb(228, 228, 228);
+    }
 </style>
 
 
@@ -68,33 +72,31 @@
             <yd-cell-group title="">
                 <yd-cell-item arrow href="/user/info" type="link">
                     <yd-icon slot="icon" name="feedback" size=".43rem"></yd-icon>
-                    <span slot="left">基本资料</span>
+                    <span slot="left" style="margin-left: 2px;">基本资料</span>
                     <span slot="right"></span>
                 </yd-cell-item>
                 <yd-cell-item arrow href="/user/qrcode" type="link">
                     <img slot="icon" style="height: 16px;" src="../../../static/images/icon_qrcode.png">
-                    <span slot="left">我的二维码</span>
+                    <span slot="left" style="margin-left: 4px;">我的二维码</span>
                     <span slot="right"></span>
                 </yd-cell-item>
-                <yd-cell-item arrow href="#" type="link">
-                    <img slot="icon" style="height: 18px;" src="../../../static/images/icon_broker.png">
+                <yd-cell-item arrow href="/user/broker" type="link">
+                    <img slot="icon" style="height: 16px;" src="../../../static/images/icon_broker.png">
                     <span slot="left">我的经纪人</span>
                     <span slot="right"></span>
                 </yd-cell-item>
                 <yd-cell-item arrow href="#" type="link">
                     <yd-icon slot="icon" name="like-outline" size=".42rem"></yd-icon>
-                    <span slot="left">我的收藏</span>
+                    <span slot="left" style="margin-left: 2px;">我的收藏</span>
                 </yd-cell-item>
                 <yd-cell-item arrow href="#" type="link" @click.native="showSetting = true" >
                     <yd-icon slot="icon" name="setting" size=".44rem"></yd-icon>
-                    <span slot="left">设置</span>
+                    <span slot="left" style="margin-left: 1px;">设置</span>
                 </yd-cell-item>
             </yd-cell-group>
 
-            <yd-actionsheet :items="settings" v-model="showSetting" cancel="取消"></yd-actionsheet>
-
+            <yd-actionsheet :items="settings" v-model="showSetting" cancel="取消" class="settings-class"></yd-actionsheet>
             <!-- 主体内容结束 -->
-
 
 
 
@@ -137,6 +139,12 @@ export default {
                     label: '账号绑定',
                     callback: () => {
                         this.$dialog.toast({mes: '看到了不该看到的东西！'});
+                    }
+                },
+                {
+                    label: '插件',
+                    callback: () => {
+                        this.$router.push('/user/plug');
                     }
                 }
             ]

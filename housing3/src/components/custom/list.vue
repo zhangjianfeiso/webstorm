@@ -65,7 +65,7 @@
                                 <span class="list-del-price">{{item.productprice}}</span>
                             </div>
                             <div>
-                                <img slot="icon" style="height: 20px;" src="../../../static/images/icon_right_2x.png">
+                                <img slot="icon" style="height: 15px;" src="../../../static/images/icon_right_2x.png">
                             </div>
                         </yd-list-other>
                         <yd-list-other slot="other">

@@ -1,0 +1,313 @@
+<!-- 基本资料 -->
+<style scoped>
+    .save-btn{
+        color: #527cff;
+        font-size:1em;
+    }
+    header{
+        border-bottom:1px solid;
+    }
+    .content-group .yd-cell-item{
+        border-bottom: 1px solid rgb(235, 235, 235);
+        border-top: 1px solid rgb(235, 235, 235);
+    }
+    .content-group .yd-textarea{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        border: 1px solid rgb(238, 238, 238);
+    }
+    .checklist-class .yd-checklist-item{
+        border-bottom:1px solid rgb(238, 238, 238);
+    }
+    .warm-prompt{
+        text-align: left;
+    }
+</style>
+
+<template>
+    <div>
+
+        <yd-layout>
+            <yd-navbar slot="navbar" :title="navbar">
+                <router-link to="/" slot="left">
+                    <yd-navbar-back-icon></yd-navbar-back-icon>
+                </router-link>
+
+                <router-link  v-if="isChange" to="#" slot="right" :class="saveBtn" @click.native="save">
+                    <yd-icon name="checkoff" size=".3rem"></yd-icon>保存
+                </router-link>
+            </yd-navbar>
+
+            <yd-cell-group :class="contentGroup">
+                <yd-cell-item>
+                    <span slot="left">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+                    <yd-input slot="right" max="15" required  v-model="formData.name" type="text" placeholder="请输入姓名"></yd-input>
+                </yd-cell-item>
+                <yd-cell-item arrow type="label">
+                    <span slot="left">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+                    <select slot="right" required v-model="formData.sex" >
+                        <option value="">请选择性别</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                        <option value="3">未知</option>
+                    </select>
+                </yd-cell-item>
+                <yd-cell-item>
+                    <span slot="left">手机号码：</span>
+                    <yd-input slot="right" max="15" required v-model="formData.mobile"  regex="mobile" type="number" placeholder="请输入手机号"></yd-input>
+                </yd-cell-item>
+            </yd-cell-group>
+            <yd-cell-group :class="contentGroup">
+                <yd-cell-item @click.native="showHouseSearch = true" arrow>
+                    <img slot="icon" style="height: 25px;" src="../../../static/images/icon_add.png">
+                    <span slot="left">意向楼盘</span>
+                    <span slot="right">查看楼盘</span>
+                </yd-cell-item>
+                <yd-cell-group :class="intentionHouse">
+                    <yd-cell-item v-for="house,key in houses" :key="key">
+                        <span slot="left" style="overflow: hidden;width:260px;text-align:left;text-overflow:ellipsis;white-space:nowrap;">{{ house.name }}</span>
+                        <span slot="right">
+                            <yd-icon name="delete" size=".35rem" color="#fd0707" @click.native="deleteHouse(house.id)"></yd-icon>
+                        </span>
+                    </yd-cell-item>
+                </yd-cell-group>
+            </yd-cell-group>
+            <yd-flexbox direction="vertical" class="warm-prompt ">
+                <div style="height: 30px;"></div>
+                <yd-flexbox-item>
+                    <span style="font-size: 16px;line-height: 30px;">温馨提示：</span><br/>
+                    <span style="color:rgb(165, 165, 165)">&nbsp;&nbsp;&nbsp;&nbsp;请务必提交真实的客户信息，若多次提交虚假信息，您的账号将会被暂停或终止！</span>
+                </yd-flexbox-item>
+            </yd-flexbox>
+
+
+
+
+            <!-- 楼盘搜索 -->
+            <yd-popup v-model="showHouseSearch" position="left" width="80%">
+                <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
+                    <yd-list theme="4" slot="list">
+                        <yd-checklist v-model="checklist" :class="checklistClass">
+                            <yd-checklist-item :val="item.title" v-for="item, key in list" :key="key">
+                                <div style="height: 50px;line-height: 50px;overflow:hidden;text-align: left;">{{item.title}}</div>
+                            </yd-checklist-item>
+                        </yd-checklist>
+                        <!--<yd-cell-group>
+                            <yd-cell-item v-for="item, key in list" :key="key">
+                                <span slot="left">左边内容一</span>
+                                <span slot="right">右边内容一</span>
+                            </yd-cell-item>
+                        </yd-cell-group>-->
+                    </yd-list>
+                    <!-- 数据全部加载完毕显示 -->
+                    <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+                    <!-- 加载中提示，不指定，将显示默认加载中图标 -->
+                    <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
+                </yd-infinitescroll>
+            </yd-popup>
+        </yd-layout>
+    </div>
+</template>
+
+<script>
+
+    export default {//handler
+        data() {
+            return {
+                intentionHouse:'intention-house',
+                checklistClass:'checklist-class',
+                checklist:[],
+                isChange:false,
+                showHouseSearch:false,
+                formData:{},
+                contentGroup:'content-group',
+                saveBtn: 'save-btn',
+                navbar: '一键报备',
+                houses:[{name:'碧桂园-广州',id:1},{name:'碧桂园-深圳',id:2},{name:'骆驼男装2016夏装骆驼男装2016夏装男士短袖T恤骆驼男装2016夏装男士短袖T恤',id:3}],
+                page: 1,
+                pageSize: 10,
+                list: [
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
+                        title: "标题标题标题标题标题",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
+                        title: "骆驼男装2016夏装男士短袖T恤",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
+                        title: "条纹短袖T恤男士韩版衣服",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
+                        title: "夏季青少年衣服男生",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
+                        title: "2016夏装新款时尚潮",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    },
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
+                        title: "男装衣服男夏t恤 男士短",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    }
+                    ,
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
+                        title: "男装衣服男夏t恤 男士短",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    }
+                    ,
+                    {
+                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
+                        title: "男装衣服男夏t恤 男士短",
+                        marketprice: 56.23,
+                        productprice: 89.36
+                    }
+                ]
+            }
+        },
+        watch:{
+            formData:{//深度监听，可监听到对象、数组的变化
+                handler(newVal, oldVal){
+                    if(oldVal){ //监听表单数据变化，变化保存按钮出现
+                        this.isChange = true;
+                    }
+                },
+                deep:true,
+                immediate: true
+            },
+            checklist:{
+                handler(newValue,oldValue){
+                    if(oldValue){ //监听表单数据变化，变化保存按钮出现
+                        this.isChange = true;
+                    }
+                    var temp = [];
+                    var list = this.list;
+                    for(var x=0; x<newValue.length; x++){
+                        for(var y=0; y<list.length; y++){
+                            if(newValue[x] == list[y].title){
+                                var t = {name:newValue[x],id:newValue[x]};
+                                temp.push(t);
+                                break;
+                            }
+                        }
+                    }
+                    this.houses = temp;
+                },
+                deep:true
+            }
+        },
+        methods: {
+            save(){
+                this.isChange = false;//隐藏保存按钮
+                this.$dialog.toast({
+                    mes: '保存成功',
+                    timeout: 1500,
+                    icon: 'success'
+                });
+            },
+            deleteHouse(id){
+                var houses = this.houses;
+                var temp = [];
+                var checkTemp = [];
+                for(var x=0; x<houses.length; x++){
+                    if(id != houses[x].id){
+                        temp.push(houses[x]);
+                        checkTemp.push(houses[x].name);
+                    }
+                }
+                this.checklist = checkTemp;
+                this.houses = temp;
+
+            },
+            loadList() {
+                this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+                    params: {
+                        page: this.page,
+                        pagesize: this.pageSize
+                    }
+                }).then(function (response) {
+                    const _list = response.body;
+                    this.list = [...this.list, ..._list];
+                    if (_list.length < this.pageSize || this.page == 3) {
+                        /* 所有数据加载完毕 */
+                        this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
+                        return;
+                    }
+                    /* 单次请求数据完毕 */
+                    this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
+                    this.page++;
+                });
+            }
+        }
+    }
+</script>
