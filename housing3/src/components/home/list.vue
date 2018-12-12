@@ -78,7 +78,7 @@
 
                 <yd-list theme="4" slot="list">
                     <yd-list-item v-for="item, key in list" :key="key">
-                        <img slot="img" :src="item.img" class="yd-img-item">
+                        <img slot="img" :src="item.img" style="min-height: 95px" class="yd-img-item">
                         <span slot="title">{{ item.name }}</span>
                         <span slot="title" style="float: right;" @click="collect(item.id,item.collect)">
                             <img v-if="!item.collect" slot="icon" style="height: 18px;" src="../../../static/images/icon_collect_black.png">

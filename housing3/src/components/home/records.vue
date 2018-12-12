@@ -152,7 +152,7 @@
                     if(oldValue){ //监听表单数据变化，变化保存按钮出现
                         this.isChange = true;
                     }
-                    if(newValue.length > 3){
+                    if(newValue.length > 3 && oldValue && oldValue.length < newValue.length){
                         this.$dialog.toast({
                             mes: '最多只能报备3个楼盘！',
                             timeout: 1500,
@@ -161,6 +161,9 @@
                                 //this.$dialog.alert({mes: '给你一次重来的机会！'});
                             }
                         });
+                        return;
+                    }
+                    if(newValue.length > 3){
                         return;
                     }
                     var temp = [];

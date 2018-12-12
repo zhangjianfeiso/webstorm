@@ -25,7 +25,7 @@
 
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
                 <yd-list theme="4" slot="list">
-                    <yd-list-item v-for="item, key in list" :key="key">
+                    <yd-list-item v-for="item, key in list" :key="key" style="height: 105px;">
                         <img slot="img" :src="item.img" style="border-radius: 50%;height: 80px;width:80px;border:1px solid rgb(228, 228, 228);">
                         <span slot="title">{{ item.name }}</span>
                         <span slot="title" style="margin-left: 10px;">{{ item.mobile }}</span>
