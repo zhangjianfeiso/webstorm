@@ -52,7 +52,7 @@
 
                 <yd-list theme="4" slot="list">
                     <yd-list-item v-for="item, key in list" :key="key" type="link" href="/custom/detail?name=张三&id=1">
-                        <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;height: 100px;border:1px solid rgb(228, 228, 228);">
+                        <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;height: 80px;width:80px;border:1px solid rgb(228, 228, 228);">
                         <span slot="title">{{ item.name }}</span>
                         <yd-list-other slot="other">
                             <div>

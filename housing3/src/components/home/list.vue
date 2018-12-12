@@ -167,7 +167,7 @@
         },
         methods: {
             collect(id,collect){
-                console.info('=====');
+
                 this.$dialog.toast({
                     mes: collect?'取消收藏！':'收藏成功！',
                     timeout: 1000,
@@ -182,13 +182,11 @@
             },
             closeSearch(){
 
-                console.info('============');
             },
             submitHandler(){
 
             },
             result1(ret) {
-                console.info('ret___',ret);
                 this.model1 = ret.itemName1 + ' ' + ret.itemName2 + ' ' + ret.itemName3;
                 this.$dialog.toast({
                     mes:ret.itemValue1 +' '+ret.itemValue2+' '+ret.itemValue3,
@@ -205,7 +203,6 @@
                     }
                 }).then(function (response) {
                     const _list = response.body.data;
-                    console.info('___',_list);
                     this.list = [...this.list, ..._list];
                     if (_list.length < this.pageSize || this.page == 3) {
                         /* 所有数据加载完毕 */

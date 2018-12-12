@@ -86,11 +86,17 @@
 
             <!-- 楼盘搜索 -->
             <yd-popup v-model="showHouseSearch" position="left" width="80%">
+                <yd-search v-model="q.houseName" placeholder="请输入楼盘信息"></yd-search>
+                <hr style="margin-bottom: 5px;border: 1px solid rgb(238, 238, 238);"/>
+                <div style="text-align: right;margin-right: 10px;">
+                    <yd-button type="primary"   @click.native="submitHandler"><yd-icon name="search" size=".3rem"></yd-icon>&nbsp;&nbsp;搜&nbsp;&nbsp;索</yd-button>
+                </div>
+                <hr style="margin-top: 5px;border: 1px solid rgb(238, 238, 238);"/>
                 <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
                     <yd-list theme="4" slot="list">
                         <yd-checklist v-model="checklist" :class="checklistClass">
-                            <yd-checklist-item :val="item.title" v-for="item, key in list" :key="key">
-                                <div style="height: 50px;line-height: 50px;overflow:hidden;text-align: left;">{{item.title}}</div>
+                            <yd-checklist-item :val="item.id" v-for="item, key in list" :key="key">
+                                <div style="height: 50px;line-height: 50px;overflow:hidden;text-align: left;">{{item.name}}</div>
                             </yd-checklist-item>
                         </yd-checklist>
                         <!--<yd-cell-group>
@@ -115,6 +121,7 @@
     export default {//handler
         data() {
             return {
+                q:{houseName:''},
                 intentionHouse:'intention-house',
                 checklistClass:'checklist-class',
                 checklist:[],
@@ -124,115 +131,10 @@
                 contentGroup:'content-group',
                 saveBtn: 'save-btn',
                 navbar: '一键报备',
-                houses:[{name:'碧桂园-广州',id:1},{name:'碧桂园-深圳',id:2},{name:'骆驼男装2016夏装骆驼男装2016夏装男士短袖T恤骆驼男装2016夏装男士短袖T恤',id:3}],
+                houses:[],
                 page: 1,
                 pageSize: 10,
-                list: [
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/14381920926024616259.jpg",
-                        title: "标题标题标题标题标题",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/21/10172020923917672923.jpg",
-                        title: "骆驼男装2016夏装男士短袖T恤",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/23/15395220917905380014.jpg",
-                        title: "条纹短袖T恤男士韩版衣服",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/25/14244120933639105658.jpg",
-                        title: "夏季青少年衣服男生",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/26/12365720933909085511.jpg",
-                        title: "2016夏装新款时尚潮",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    },
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-                        title: "男装衣服男夏t恤 男士短",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    }
-                    ,
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-                        title: "男装衣服男夏t恤 男士短",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    }
-                    ,
-                    {
-                        img: "http://img1.shikee.com/try/2016/06/19/09430120929215230041.jpg",
-                        title: "男装衣服男夏t恤 男士短",
-                        marketprice: 56.23,
-                        productprice: 89.36
-                    }
-                ]
+                list: []
             }
         },
         watch:{
@@ -250,12 +152,23 @@
                     if(oldValue){ //监听表单数据变化，变化保存按钮出现
                         this.isChange = true;
                     }
+                    if(newValue.length > 3){
+                        this.$dialog.toast({
+                            mes: '最多只能报备3个楼盘！',
+                            timeout: 1500,
+                            icon: 'error',
+                            callback: () => {
+                                //this.$dialog.alert({mes: '给你一次重来的机会！'});
+                            }
+                        });
+                        return;
+                    }
                     var temp = [];
                     var list = this.list;
                     for(var x=0; x<newValue.length; x++){
                         for(var y=0; y<list.length; y++){
-                            if(newValue[x] == list[y].title){
-                                var t = {name:newValue[x],id:newValue[x]};
+                            if(newValue[x] == list[y].id){
+                                var t = {name:list[y].name,id:newValue[x]};
                                 temp.push(t);
                                 break;
                             }
@@ -266,7 +179,14 @@
                 deep:true
             }
         },
+        created:function () {
+            this.loadList();
+        },
         methods: {
+            submitHandler(){//搜索框
+                var value = this.q.houseName;
+                this.$dialog.toast({mes: `搜索：${value}`});
+            },
             save(){
                 this.isChange = false;//隐藏保存按钮
                 this.$dialog.toast({
@@ -282,7 +202,7 @@
                 for(var x=0; x<houses.length; x++){
                     if(id != houses[x].id){
                         temp.push(houses[x]);
-                        checkTemp.push(houses[x].name);
+                        checkTemp.push(houses[x].id);
                     }
                 }
                 this.checklist = checkTemp;
@@ -290,13 +210,13 @@
 
             },
             loadList() {
-                this.$http.jsonp('http://list.ydui.org/getdata.php?type=backposition', {
+                this.$http.get(this.$global.apiUrl + '/records/list', {
                     params: {
                         page: this.page,
                         pagesize: this.pageSize
                     }
                 }).then(function (response) {
-                    const _list = response.body;
+                    const _list = response.body.data;
                     this.list = [...this.list, ..._list];
                     if (_list.length < this.pageSize || this.page == 3) {
                         /* 所有数据加载完毕 */

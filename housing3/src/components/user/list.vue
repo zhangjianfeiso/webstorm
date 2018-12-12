@@ -34,11 +34,11 @@
                 <yd-flexbox direction="vertical">
                     <yd-flexbox-item>
                         <img src="../../../static/images/timg.jpg" style="height: 160px;width:100%;" class="blur"/>
-                        <div style="position: absolute;top:100px;left: 42%;">
+                        <div style="position: absolute;top:50px;left: 42.5%;">
+                            <div style="margin:auto;border:3px solid #9F9887;border-radius: 35px;margin-bottom: 5px;">
+                                <img src="../../../static/images/user_avatar_unlogin@2x.png" style="width: 60px;top:1px;position:relative;">
+                            </div>
                             <yd-button size="mini" type="primary" @click.native="login">立即登陆</yd-button>
-                        </div>
-                        <div style="position: absolute;top:20px;left: 42%;margin:auto;border:3px solid #9F9887;border-radius: 35px;">
-                            <img src="../../../static/images/user_avatar_unlogin@2x.png" style="width: 60px;top:2px;position:relative;">
                         </div>
                     </yd-flexbox-item>
                 </yd-flexbox>
@@ -85,7 +85,7 @@
                     <span slot="left">我的经纪人</span>
                     <span slot="right"></span>
                 </yd-cell-item>
-                <yd-cell-item arrow href="#" type="link">
+                <yd-cell-item arrow href="#" type="link" @click.native="collect">
                     <yd-icon slot="icon" name="like-outline" size=".42rem"></yd-icon>
                     <span slot="left" style="margin-left: 2px;">我的收藏</span>
                 </yd-cell-item>
@@ -157,6 +157,16 @@ export default {
         gotoCustomDetail(state){
             console.info('state__',state);
             this.$router.push({path:'/custom/detail',query:{state:state}});
+        },
+        collect(){
+            this.$dialog.toast({
+                mes: '暂未开放此功能',
+                timeout: 1500,
+                icon: 'error',
+                callback: () => {
+                    //this.$dialog.alert({mes: '给你一次重来的机会！'});
+                }
+            });
         }
     },
     components: {}
