@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 import YDUI from 'vue-ydui'
 /* 相当于import YDUI from 'vue-ydui/ydui.rem.js' */
 import 'vue-ydui/dist/ydui.rem.css'
@@ -15,7 +16,9 @@ import VueJsonp from 'vue-jsonp'
 import VueResource from 'vue-resource'
 import {ActionSheet} from 'vue-ydui/dist/lib.rem/actionsheet'
 import global from '@/components/common/global'
+import common from '@/common.js'
 
+Vue.use(common)
 Vue.prototype.$global = global
 Vue.component(ActionSheet.name, ActionSheet)
 Vue.use(VueResource)

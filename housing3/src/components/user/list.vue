@@ -152,7 +152,7 @@ export default {
     },
     methods:{
         login(){
-            console.info('login...');
+            this.$router.push('/login')
         },
         gotoCustomDetail(state){
             console.info('state__',state);

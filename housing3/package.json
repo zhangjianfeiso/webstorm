@@ -19,6 +19,7 @@
     "vue-jsonp": "^0.1.8",
     "vue-router": "^3.0.1",
     "vue-ydui": "^1.2.6",
+    "weixin-js-sdk": "^1.4.0-test",
     "ydui-district": "^1.1.0"
   },
   "devDependencies": {

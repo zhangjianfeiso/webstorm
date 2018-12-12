@@ -15,12 +15,16 @@ import vuser_qrcode from '@/components/user/qrcode'
 import vuser_info from '@/components/user/info'
 import vuser_broker from '@/components/user/broker'
 import vuser_plug from '@/components/user/plug'
+import vlogin from '@/components/login'
+import vregister from '@/components/register'
 
 Vue.use(Router)
 
 export default new Router({
     //mode: 'history',
     routes: [
+        {path:'/login',name:'login',component: vlogin},
+        {path:'/register',name:'register',component: vregister},
         {path: '/', name: 'home',component: vhome,children:[
             {path:'', name: 'home_list',component:vhome_list},
             {path:'/records', name: 'home_records',component:vhome_records}
