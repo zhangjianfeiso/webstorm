@@ -180,6 +180,9 @@
                         list[x].collect = (!collect )
                     }
                 }
+                setTimeout(() => {
+                    $('.icon-collect').show();
+                },100);
             },
             closeSearch(){
 
