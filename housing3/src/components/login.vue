@@ -23,17 +23,17 @@
                                 <span slot="left">
                                     <img slot="icon" style="height:16px;margin-right: 5px;" src="../../static/images/icon_user.png">
                                 </span>
-                                <yd-input slot="right" required v-model="username" max="20" placeholder="用户名"></yd-input>
+                                <yd-input slot="right" required v-model="formData.username" max="20" placeholder="用户名"></yd-input>
                             </yd-cell-item>
                             <yd-cell-item>
                                 <span slot="left">
                                      <img slot="icon" style="height:18px;margin-right: 5px;" src="../../static/images/icon_pwd.png">
                                 </span>
-                                <yd-input slot="right" required type="password" v-model="password" placeholder="密码"></yd-input>
+                                <yd-input slot="right" required type="password" v-model="formData.password" placeholder="密码"></yd-input>
                             </yd-cell-item>
                         </yd-cell-group>
                     </div>
-                    <div style="width:70%;">
+                    <div style="width:60%;">
                         <yd-button size="large" type="primary" shape="circle" @click.native="login">登陆</yd-button>
                         <yd-button size="large" type="warning" shape="circle" @click.native="$router.push('/register')">注册用户</yd-button>
                     </div>
@@ -51,7 +51,7 @@
 <script>
 export default {
     data() {
-        return {msg: '这个是Home模板页'}
+        return {formData:{}}
     },
     mounted:function () {
         $('#scrollView').css('overflow-y','hidden');

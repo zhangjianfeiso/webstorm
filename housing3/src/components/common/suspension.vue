@@ -30,15 +30,15 @@
         },
         methods:{
             dragPanelMove(){
-                var cont=$("#barrage");
-                var contW=$("#barrage").width();
-                var contH=$("#barrage").height();
+                var cont = $("#barrage");
+                var contW = $("#barrage").width();
+                var contH = $("#barrage").height();
                 var startX,startY,sX,sY,moveX,moveY,leftX,rightX,topY,bottomY;
-                var winW=$(window).width();
-                var winH=$(window).height();
-                var barrage_name=$("#barrage_name");
-                var barrage_frame=$("#barrage_frame");
-                var body=$("body");
+                var winW = $(window).width();
+                var winH = $(window).height();
+                var barrage_name = $("#barrage_name");
+                var barrage_frame = $("#barrage_frame");
+                var body = $("body");
                 cont.on({//绑定事件
                     touchstart:function(e){
                         startX = e.originalEvent.targetTouches[0].pageX;    //获取点击点的X坐标

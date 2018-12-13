@@ -77,12 +77,11 @@
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
 
                 <yd-list theme="4" slot="list">
-                    <yd-list-item v-for="item, key in list" :key="key">
+                    <yd-list-item v-for="item, key in list" :key="key" class="home-list-item">
                         <img slot="img" :src="item.img" style="min-height: 95px" class="yd-img-item">
-                        <span slot="title">{{ item.name }}</span>
-                        <span slot="title" style="float: right;" @click="collect(item.id,item.collect)">
-                            <img v-if="!item.collect" slot="icon" style="height: 18px;" src="../../../static/images/icon_collect_black.png">
-                            <img v-else slot="icon"  style="height: 18px;" src="../../../static/images/icon_already_collect_orange.png">
+                        <span slot="title"><span>{{ item.name }}</span>
+                        <img v-if="!item.collect" class="icon-collect" @click="collect(item.id,item.collect)" slot="icon" style="height: 18px;float: right;display: none;" src="../../../static/images/icon_collect_black.png">
+                            <img v-else slot="icon" class="icon-collect"  @click="collect(item.id,item.collect)"  style="height: 18px;float: right;" src="../../../static/images/icon_already_collect_orange.png">
                         </span>
                         <yd-list-other slot="other">
                             <div>
@@ -165,9 +164,11 @@
         created:function () {
             this.loadList();
         },
+        mounted:function () {
+
+        },
         methods: {
             collect(id,collect){
-
                 this.$dialog.toast({
                     mes: collect?'取消收藏！':'收藏成功！',
                     timeout: 1000,
@@ -204,6 +205,12 @@
                 }).then(function (response) {
                     const _list = response.body.data;
                     this.list = [...this.list, ..._list];
+                    setTimeout(() => {
+                        $('.yd-list-title').css('display','block');
+                        setTimeout(() => {
+                            $('.icon-collect').show();
+                        },100);
+                    },50)
                     if (_list.length < this.pageSize || this.page == 3) {
                         /* 所有数据加载完毕 */
                         this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');

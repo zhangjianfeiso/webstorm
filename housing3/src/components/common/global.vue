@@ -14,8 +14,8 @@
 <script>
 export default {
     baseUrl:'',
-    apiUrl:'http://192.168.1.104:8084'
-    //apiUrl:'http://192.168.100.125:8084'
+    //apiUrl:'http://192.168.1.104:8084'
+    apiUrl:'http://47.107.129.140:8080'
     //apiUrl:'http://58.67.199.149:8080'
 }
 </script>
