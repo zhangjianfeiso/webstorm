@@ -17,9 +17,17 @@ import VueResource from 'vue-resource'
 import {ActionSheet} from 'vue-ydui/dist/lib.rem/actionsheet'
 import global from '@/components/common/global'
 import common from '@/common.js'
+import VueAMap from 'vue-amap';
 
-Vue.use(common)
 Vue.prototype.$global = global
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+    key: global.mapKey,
+    plugin: ['AMap.Autocomplete','AMap.Geolocation', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+    // 默认高德 sdk 版本为 1.4.4
+    v: '1.4.4'
+});
+Vue.use(common)
 Vue.component(ActionSheet.name, ActionSheet)
 Vue.use(VueResource)
 Vue.use(VueJsonp)
@@ -40,5 +48,20 @@ new Vue({
     el: '#app',
     router,
     components: {App},
-    template: '<App/>'
+    template: '<App/>',
+    beforeCreate:function () {
+        this.isWx();
+    },
+    created:function () {
+        var $this = this;
+        $this.getOpenId().then(user => {
+            //alert('user__'+ (user?JSON.stringify(user):''));
+        });
+    },
+    mounted:function () {
+        var $this = this;
+        $this.initWx({url: location.href}).then(wx => {
+            $this.wxConfig(wx)
+        })
+    }
 })

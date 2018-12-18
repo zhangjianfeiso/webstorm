@@ -15,7 +15,7 @@ export default {
          */
         Vue.prototype.isWx = function () {
             var iswx = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'
-            if (!iswx) {
+            if (!iswx && !this.$global.dev) {
                 this.$router.push({path: '/warn'})
             }
         }
@@ -44,20 +44,20 @@ export default {
          * @returns {string}
          */
         Vue.prototype.redirectUri = function (redirectUri) {
-            var appid = this.$global.appid
+            var appid = this.$global.appid;
             return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
         }
 
         Vue.prototype.auth = function () {
-            let iswx = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'
+            let iswx = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger';
             if (iswx) {
-                var code = sessionStorage.getItem('weixin-redirect-code')
-                var params = this.$route.query
+                var code = sessionStorage.getItem('weixin-redirect-code');
+                var params = this.$route.query;
                 if (!params.code && !code) {
-                    window.location.replace(this.redirectUri(location.href))
+                    window.location.replace(this.redirectUri(location.href));
                 } else if (!code) {
-                    sessionStorage.setItem('weixin-redirect-code', params.code)
-                    history.back()
+                    sessionStorage.setItem('weixin-redirect-code', params.code);
+                    history.back();
                 }
             }
             // window.location.replace(this.redirectUri(location.href));
@@ -68,12 +68,12 @@ export default {
          * @returns {*} openid nickname
          */
         Vue.prototype.getOpenId = function () {
-            var user = sessionStorage.getItem('user')
+            var user = sessionStorage.getItem('user');
             user = '{"openid":"alkLklk-KLKLakdad12839088JK","nickname":"__________张","identity":2}'
             if (user) {
-                return Promise.resolve(JSON.parse(user))
+                return Promise.resolve(JSON.parse(user));
             }
-            var code = this.$route.query.code
+            var code = this.$route.query.code;
             if (code) {
                 var url = this.$global.apiUrl + '/api/openid'
                 return this.$http.post(url, {code: code}, {emulateJSON: true}).then(function (response) {
@@ -93,6 +93,8 @@ export default {
                     //alert('错误_2_' + JSON.stringify(error));
                     return Promise.resolve(error)
                 })
+            }else{
+                this.auth();
             }
             return Promise.resolve('')
 
@@ -160,11 +162,6 @@ export default {
      *  }
          */
         Vue.prototype.share = function (opts) {
-            var $this = this
-            $this.initWx({url: location.href}).then(wx => {
-                $this.wxConfig(wx)
-            })
-
             wx.ready(function () {
                 var shareData = {
                     title: opts.title,
@@ -173,9 +170,11 @@ export default {
                     imgUrl: opts.img //缩略图
                 }
                 console.info('分享___', shareData)
-                if (wx.onMenuShareAppMessage) { //微信文档中提到这两个接口即将弃用，故判断
+                if (wx.onMenuShareAppMessage && wx.onMenuShareAppMessage && wx.onMenuShareQQ && wx.onMenuShareQZone) { //微信文档中提到这两个接口即将弃用，故判断
                     wx.onMenuShareAppMessage(shareData)//1.0 分享到朋友
                     wx.onMenuShareTimeline(shareData)//1.0分享到朋友圈
+                    wx.onMenuShareQQ(shareData);//分享到QQ
+                    wx.onMenuShareQZone(shareData); //分享到QQ空间
                 } else {
                     wx.updateAppMessageShareData(shareData)//1.4 分享到朋友
                     wx.updateTimelineShareData(shareData)//1.4分享到朋友圈

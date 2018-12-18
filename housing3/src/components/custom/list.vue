@@ -51,7 +51,7 @@
             <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
 
                 <yd-list theme="4" slot="list">
-                    <yd-list-item v-for="item, key in list" :key="key" type="link" href="/custom/detail?name=张三&id=1" style="height: 95px;">
+                    <yd-list-item v-for="item, key in list" :key="key" type="link" href="/detail?name=张三&id=1" style="height: 95px;">
                         <img slot="img" :src="item.img" class="yd-img-item" style="border-radius: 50%;height: 80px;width:80px;border:1px solid rgb(228, 228, 228);">
                         <span slot="title">{{ item.name }}</span>
                         <span slot="title" style="margin-left: 15px;">{{ item.mobile }}</span>

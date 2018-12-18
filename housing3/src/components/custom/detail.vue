@@ -157,7 +157,7 @@ export default {
     },
     methods: {
         gotoProgress(){
-            this.$router.push({path:'progress'});
+            this.$router.push({path:'/progress'});
         },
         fn(label, key) {
             console.log(label, key);

@@ -70,17 +70,17 @@
 
 
             <yd-cell-group title="">
-                <yd-cell-item arrow href="/user/info" type="link">
+                <yd-cell-item arrow href="/info" type="link">
                     <yd-icon slot="icon" name="feedback" size=".43rem"></yd-icon>
                     <span slot="left" style="margin-left: 2px;">基本资料</span>
                     <span slot="right"></span>
                 </yd-cell-item>
-                <yd-cell-item arrow href="/user/qrcode" type="link">
+                <yd-cell-item arrow href="/qrcode" type="link">
                     <img slot="icon" style="height: 16px;" src="../../../static/images/icon_qrcode.png">
                     <span slot="left" style="margin-left: 4px;">我的二维码</span>
                     <span slot="right"></span>
                 </yd-cell-item>
-                <yd-cell-item arrow href="/user/broker" type="link">
+                <yd-cell-item arrow href="/broker" type="link">
                     <img slot="icon" style="height: 16px;" src="../../../static/images/icon_broker.png">
                     <span slot="left">我的经纪人</span>
                     <span slot="right"></span>
@@ -144,7 +144,7 @@ export default {
                 {
                     label: '插件',
                     callback: () => {
-                        this.$router.push('/user/plug');
+                        this.$router.push('/plug');
                     }
                 }
             ]
@@ -156,7 +156,7 @@ export default {
         },
         gotoCustomDetail(state){
             console.info('state__',state);
-            this.$router.push({path:'/custom/detail',query:{state:state}});
+            this.$router.push({path:'/detail',query:{state:state}});
         },
         collect(){
             this.$dialog.toast({

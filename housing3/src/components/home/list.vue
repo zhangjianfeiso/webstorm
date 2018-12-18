@@ -107,7 +107,7 @@
                                     <yd-button type="primary" size="mini" @click.native="$router.push('/records')">一键报备</yd-button>
                                 </span>
                                 <span class="list-del-price" style="margin-left: 12px;">
-                                    <yd-button type="warning" size="mini">楼盘详情</yd-button>
+                                    <yd-button type="warning" size="mini" @click.native="$router.push('/map')">楼盘详情</yd-button>
                                 </span>
                             </div>
                             <div></div>
