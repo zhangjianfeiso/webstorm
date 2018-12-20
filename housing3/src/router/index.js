@@ -5,6 +5,7 @@ import vwarn from '@/components/common/warn'
 import vhome_list from '@/components/home/list'
 import vhome_records from '@/components/home/records'
 import vhome_map from '@/components/home/map'
+import vhome_map2 from '@/components/home/map2'
 
 
 import vcustom from '@/components/custom'
@@ -32,7 +33,8 @@ export default new Router({
         {path: '/', name: 'home',component: vhome,children:[
             {path:'', name: 'home_list',component:vhome_list},
             {path:'/records', name: 'home_records',component:vhome_records},
-            {path:'/map', name: 'home_map',component:vhome_map}
+            {path:'/map', name: 'home_map',component:vhome_map},
+            {path:'/map2', name: 'home_map2',component:vhome_map2}
         ]},
         {path: '/custom', name: 'custom',component: vcustom,children:[
             {path:'',name:'custom_list',component:vcustom_list},
