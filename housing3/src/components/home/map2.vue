@@ -15,7 +15,8 @@
         data() {
             return {
                 map:{},
-                center:[116.397428, 39.90923]
+                center:[116.397428, 39.90923],
+                infowindow:''
             }
         },
         mounted: function () {
@@ -37,7 +38,7 @@
                 });
                 $this.map.on('complete', function() {
                     $('#loadingTip').detach();
-                    console.info("地图图块加载完毕！当前地图中心点为：" + $this.map.getCenter());
+                    console.info("地图图块加载完毕！当前地图中心点为：" + $this.center);
                     $this.addMarker();
                 });
             },
@@ -66,6 +67,8 @@
                         position: $this.center,
                         offset: new AMap.Pixel(-20, -35)
                     });
+                    marker.on('click', $this.centerMarkerClick);
+                    marker.emit('click', {target: marker});
                     // 将创建的点标记添加到已有的地图实例：
                     marker.setMap($this.map);
                 });
@@ -73,18 +76,27 @@
                 this.openInfo();
 
             },
+            centerMarkerClick(){
+                console.info('==========',this.infowindow);
+                if(this.infowindow){
+                    this.infowindow.open(this.map, this.center);
+                }
+            },
             openInfo() {
                 //构建信息窗体中显示的内容
                 var info = [];
-                //info.push("<div class='input-card content-window-card'><div><img style=\"float:left;\" src=\" https://webapi.amap.com/images/autonavi.png \"/></div> ");
-                info.push("<div style=\"padding:0px 0px 0px 0px;\"><h4>高德软件</h4>");
-                info.push("<p class='input-item'>电话 : 010-84107000   邮编 : 100102</p>");
-                info.push("<p class='input-item'>地址 :北京市朝阳区望京阜荣街10号首开广场4层</p></div></div>");
-                var infoWindow = new AMap.InfoWindow({
-                    content: info.join(""),
-                    //offset: new AMap.Pixel(0, -30)
+                info.push('<div style="padding:0px 0px 0px 0px;"><h3 style="background: #1287ef;line-height: 26px;color: white;">高德软件</h3>');
+                info.push('<p class="input-item">电话 : 010-84107000   邮编 : 100102</p>');
+                info.push('<p class="input-item">地址 :北京市朝阳区望京阜荣街10号首开广场4层</p></div></div>');
+                var $this = this;
+                AMap.plugin('AMap.AdvancedInfoWindow',function() {
+                    $this.infowindow = new AMap.AdvancedInfoWindow({
+                        content: info.join(''),
+                        offset: new AMap.Pixel(0, -30),
+                       // asOrigin: false
+                    });
+                    $this.infowindow.open($this.map, $this.center);
                 });
-                infoWindow.open(this.map, this.map.getCenter());
             }
         }
     }
