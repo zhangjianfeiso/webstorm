@@ -67,19 +67,19 @@
                             <div>
                                 <span class="list-del-price">
                                     <yd-tabbar id="flow-list">
-                                        <yd-tabbar-item title="预约" link="/custom/detail?name=张三&state=1&id=1" active>
+                                        <yd-tabbar-item title="预约" link="/detail?name=张三&state=1&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" scale=".7">{{ item.subscribe }}</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="到访" link="/custom/detail?name=张三&state=2&id=1" active>
+                                        <yd-tabbar-item title="到访" link="/detail?name=张三&state=2&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="warning" scale=".7">{{ item.visit }}</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="认筹" link="/custom/detail?name=张三&state=3&id=1" active>
+                                        <yd-tabbar-item title="认筹" link="/detail?name=张三&state=3&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="danger" scale=".7">{{ item.recognition }}</yd-badge>
                                         </yd-tabbar-item>
-                                        <yd-tabbar-item title="认购" link="/custom/detail?name=张三&state=4&id=1" active>
+                                        <yd-tabbar-item title="认购" link="/detail?name=张三&state=4&id=1" active>
                                             <img slot="icon" style="height: 3px;width:5px;" src="../../../static/images/white.png">
                                             <yd-badge slot="badge" type="primary" scale=".7">{{ item.buy }}</yd-badge>
                                         </yd-tabbar-item>
