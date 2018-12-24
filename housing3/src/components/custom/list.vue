@@ -142,6 +142,9 @@ export default {
     created:function () {
         this.loadList();
     },
+    mounted:function () {
+
+    },
     methods: {
         gotoDetail(){
             console.info('============');

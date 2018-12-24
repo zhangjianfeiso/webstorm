@@ -13,6 +13,7 @@
 
 <script>
 export default {
+    headerBg:'rgb(255, 255, 255)',
     dev:true, //是否开发环境
     appid:'wx06668e4d74c358a7',
     mapKey:'7141f2397b07188b0987d1b1ecbe9342',

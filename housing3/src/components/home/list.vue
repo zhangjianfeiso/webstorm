@@ -30,8 +30,8 @@
             <yd-backtop></yd-backtop>
 
 
-            <!-- 头部开始 -->
-            <yd-navbar slot="navbar" :title="navbar">
+            <!-- 头部开始 style="background-color: rgb(9, 187, 7)" -->
+            <yd-navbar slot="navbar" :title="navbar" :style="headerBg">
                 <router-link to="#" slot="right" @click.native="showAddr = true" :callback="closeSearch">
                     <yd-icon name="search" size="21px" color="#777"></yd-icon>
                 </router-link>
@@ -78,7 +78,7 @@
 
                 <yd-list theme="4" slot="list">
                     <yd-list-item v-for="item, key in list" :key="key" class="home-list-item">
-                        <img slot="img" :src="item.img" style="min-height: 95px" class="yd-img-item">
+                        <img slot="img" :src="item.img" style="min-height: 95px;width:120px;" class="yd-img-item">
                         <span slot="title"><span>{{ item.name }}</span>
                         <img v-if="!item.collect" class="icon-collect" @click="collect(item.id,item.collect)" slot="icon" style="height: 18px;float: right;display: none;" src="../../../static/images/icon_collect_black.png">
                             <img v-else slot="icon" class="icon-collect"  @click="collect(item.id,item.collect)"  style="height: 18px;float: right;" src="../../../static/images/icon_already_collect_orange.png">
@@ -150,12 +150,13 @@
         name: 'HelloWorld',
         data() {
             return {
+                headerBg:'background-color:'+this.$global.headerBg,
                 showAddr: false,
                 navbar: '楼盘信息',
                 searchVal:'',
                 show1: false,
                 model1: '',
-                district: District,
+                district: District,//地区搜索
                 page: 1,
                 pageSize: 10,
                 list: {}
